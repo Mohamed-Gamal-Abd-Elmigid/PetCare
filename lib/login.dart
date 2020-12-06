@@ -111,7 +111,8 @@ class _State extends State<Login> {
                               : null;
                         },
                         onChanged: (value) {
-                          if (!loginKey.currentState.validate()) {
+                          if (!loginKey.currentState.validate() ||
+                              passwordController.text.length < 5) {
                             setState(() {
                               isValid = false;
                             });
@@ -238,21 +239,11 @@ class _State extends State<Login> {
                                         passwordController.text);
                                     print(name);
 
-                                    var doctors = await api.fetchDoctors();
-
-                                    for (var doctor in doctors) {
-                                      print(doctor.address);
-                                      print(doctor.email);
-                                      print(doctor.phone);
-                                      print(doctor.name);
-                                    }
-
                                     if (name != null) {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) => HomePage(
                                                   text: name,
-                                                  doctors: doctors,
                                                 )),
                                         // value: value
                                       );

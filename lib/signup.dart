@@ -98,7 +98,8 @@ class SignUpState extends State<Signup> {
                             : null,
 
                         onChanged: (value) {
-                          if (!signup.currentState.validate()) {
+                          if (!signup.currentState.validate() ||
+                              emailController.text.length < 6) {
                             setState(() {
                               isValid = false;
                             });
@@ -146,27 +147,6 @@ class SignUpState extends State<Signup> {
                             borderSide: BorderSide(),
                           ),
                         ),
-                        // // validator: EmailValidator(errorText: "Not Valid Email"),
-                        // validator: emailController.text.length > 0
-                        //     ? MultiValidator(
-                        //         [
-                        //           RequiredValidator(errorText: "Required"),
-                        //           EmailValidator(errorText: "Not Valid Email"),
-                        //         ],
-                        //       )
-                        //     : null,
-                        // onChanged: (value) {
-                        //   if (!signup.currentState.validate()) {
-                        //     setState(() {
-                        //       isValid = false;
-                        //     });
-                        //   } else {
-                        //     setState(() {
-                        //       isValid = true;
-                        //     });
-                        //   }
-                        // },
-
                         validator: nameController.text.length != 0
                             ? (value) {
                                 return !valid.validEmail(value)
@@ -174,9 +154,10 @@ class SignUpState extends State<Signup> {
                                     : null;
                               }
                             : null,
+                        //value.length < 5
                         onChanged: (value) {
                           if (!signup.currentState.validate() ||
-                              value.length < 5) {
+                              passwordController.text.length < 5) {
                             setState(() {
                               isValid = false;
                             });
@@ -236,7 +217,9 @@ class SignUpState extends State<Signup> {
                               ])
                             : null,
                         onChanged: (value) {
-                          if (value.length < 6) {
+                          //value.length < 6
+                          if (!signup.currentState.validate() ||
+                              confirmPassword.text.length < 5) {
                             setState(() {
                               isValid = false;
                             });
@@ -292,7 +275,8 @@ class SignUpState extends State<Signup> {
                               }
                             : null,
                         onChanged: (value) {
-                          if (value.length < 6) {
+                          if (!signup.currentState.validate() ||
+                              addressController.text.length < 5) {
                             setState(() {
                               isValid = false;
                             });
@@ -398,14 +382,14 @@ class SignUpState extends State<Signup> {
 
                                 print(result);
 
-                                // var doctors = await api.fetchDoctors();
-                                //
-                                // for (var doctor in doctors) {
-                                //   print(doctor.address);
-                                //   print(doctor.email);
-                                //   print(doctor.phone);
-                                //   print(doctor.name);
-                                // }
+                                var doctors = await api.fetchDoctors();
+
+                                for (var doctor in doctors) {
+                                  print(doctor.address);
+                                  print(doctor.email);
+                                  print(doctor.phone);
+                                  print(doctor.name);
+                                }
 
                                 Navigator.of(context).push(
                                   MaterialPageRoute(

@@ -14,15 +14,33 @@ import 'services/api.dart' as api;
 //   // print(doctors);
 // }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   // String value;
   // HomePage({this.value});
 
+  var text;
+  HomePage({Key key, @required this.text, Key data}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   var doctors;
 
-  var text;
-  HomePage({Key key, @required this.text, Key data, @required this.doctors})
-      : super(key: key);
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    backData();
+  }
+
+  void backData() async {
+    var data = await api.fetchDoctors();
+    setState(() {
+      doctors = data;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -229,21 +247,22 @@ class HomePage extends StatelessWidget {
           ),
           Container(
             child: Text(
-              'Doctors' ?? " ",
+              'Welcome : ${widget.text}' ?? " ",
               style: TextStyle(
                 fontSize: 30,
               ),
             ),
           ),
           Container(
-            height: 600,
+            height: 660,
             child: ListView(
               children: [
                 Container(
-                    height: 500,
+                    height: 680,
                     child: ListView.builder(
                       shrinkWrap: true,
-                      physics: ClampingScrollPhysics(),
+                      // physics: ClampingScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: 3,
                       itemBuilder: listViewCard,
                     )),
