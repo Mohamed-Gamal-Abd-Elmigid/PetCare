@@ -93,8 +93,7 @@ Future<bool> register(User myUser) async {
 
 Future<List<Doctor>> fetchDoctors() async {
   try {
-    http.Response response =
-        await http.get('https://pet-care-iti.herokuapp.com/api/doctors');
+    http.Response response = await http.get('$baseUrl' + 'api/doctors');
 
     if (response.statusCode == 200) {
       String data = response.body;

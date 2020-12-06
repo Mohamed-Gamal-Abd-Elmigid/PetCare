@@ -2,12 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:myapp/loading.dart';
 import 'package:myapp/services/api.dart';
 // import 'package:myapp/services/api.dart' as http;
 // import 'package:myapp/services/api.dart';
 import './detailsScreen.dart';
 import 'services/api.dart' as api;
-import 'dart:async';
 
 // Future<void> main() async {
 //   DoctorApi newApi = new DoctorApi();
@@ -28,14 +28,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var doctors;
-
-  bool _saving = false;
+  bool loading = false;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _saving = true;
+    setState(() => loading = true);
     backData();
   }
 
@@ -43,328 +42,340 @@ class _HomePageState extends State<HomePage> {
     var data = await api.fetchDoctors();
     setState(() {
       doctors = data;
+      loading = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 43, 54, 62),
-        toolbarHeight: 77,
-        centerTitle: true,
-        title: Image(
-          image: AssetImage('assets/images/logo.png'),
-          width: 120,
-          height: 70,
-        ),
-        iconTheme: IconThemeData(
-          color: Colors.white,
-        ),
-      ),
-      drawer: Drawer(
-        child: Column(
-          children: [
-            Card(
-              elevation: 4,
+    return loading
+        ? Loading()
+        : Scaffold(
+            appBar: AppBar(
+              backgroundColor: Color.fromARGB(255, 43, 54, 62),
+              toolbarHeight: 77,
+              centerTitle: true,
+              title: Image(
+                image: AssetImage('assets/images/logo.png'),
+                width: 120,
+                height: 70,
+              ),
+              iconTheme: IconThemeData(
+                color: Colors.white,
+              ),
+            ),
+            drawer: Drawer(
               child: Column(
                 children: [
-                  SizedBox(
-                    height: 25,
+                  Card(
+                    elevation: 4,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 25,
+                        ),
+                        ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage:
+                                AssetImage('assets/images/man.png'),
+                            backgroundColor: Colors.white,
+                          ),
+                          title: Text(
+                            'dsafdsaf',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
+                          ),
+                          subtitle: Text(
+                            'email@gmail.com',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    color: Color.fromARGB(255, 43, 54, 62),
                   ),
-                  ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: AssetImage('assets/images/man.png'),
-                      backgroundColor: Colors.white,
+                  Expanded(
+                    child: Column(
+                      children: [
+                        FlatButton(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 20),
+                          onPressed: () {},
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.home_outlined,
+                                color: Color.fromARGB(255, 43, 54, 62),
+                                size: 30,
+                              ),
+                              SizedBox(
+                                width: 40,
+                              ),
+                              Text(
+                                'Home',
+                                style: TextStyle(fontSize: 16),
+                              )
+                            ],
+                          ),
+                        ),
+                        FlatButton(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 20),
+                          onPressed: () {},
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.perm_identity,
+                                color: Color.fromARGB(255, 43, 54, 62),
+                                size: 30,
+                              ),
+                              SizedBox(
+                                width: 40,
+                              ),
+                              Text(
+                                'Profile',
+                                style: TextStyle(fontSize: 16),
+                              )
+                            ],
+                          ),
+                        ),
+                        FlatButton(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 20),
+                          onPressed: () {},
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.pending_actions_rounded,
+                                color: Color.fromARGB(255, 43, 54, 62),
+                                size: 30,
+                              ),
+                              SizedBox(
+                                width: 40,
+                              ),
+                              Text(
+                                'My Reservations',
+                                style: TextStyle(fontSize: 16),
+                              )
+                            ],
+                          ),
+                        ),
+                        FlatButton(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 20),
+                          onPressed: () {},
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.phone,
+                                color: Color.fromARGB(255, 43, 54, 62),
+                                size: 30,
+                              ),
+                              SizedBox(
+                                width: 40,
+                              ),
+                              Text(
+                                'Contact Us',
+                                style: TextStyle(fontSize: 16),
+                              )
+                            ],
+                          ),
+                        ),
+                        FlatButton(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 20),
+                          onPressed: () {},
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.info_outline,
+                                color: Color.fromARGB(255, 43, 54, 62),
+                                size: 30,
+                              ),
+                              SizedBox(
+                                width: 40,
+                              ),
+                              Text(
+                                'About Me',
+                                style: TextStyle(fontSize: 16),
+                              )
+                            ],
+                          ),
+                        ),
+                        Spacer(),
+                        FlatButton(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 20),
+                          onPressed: () {
+                            Navigator.popUntil(
+                                context, ModalRoute.withName('/'));
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                'Log Out',
+                                style: TextStyle(
+                                    fontSize: 21, fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                width: 40,
+                              ),
+                              Icon(
+                                Icons.logout,
+                                color: Color.fromARGB(255, 43, 54, 62),
+                                size: 30,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    title: Text(
-                      widget.text,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
-                    ),
-                    subtitle: Text(
-                      'KHALED@gmail.com',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
+                  )
                 ],
               ),
-              color: Color.fromARGB(255, 43, 54, 62),
             ),
-            Expanded(
-              child: Column(
-                children: [
-                  FlatButton(
-                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                    onPressed: () {},
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.home_outlined,
-                          color: Color.fromARGB(255, 43, 54, 62),
-                          size: 30,
-                        ),
-                        SizedBox(
-                          width: 40,
-                        ),
-                        Text(
-                          'Home',
-                          style: TextStyle(fontSize: 16),
-                        )
-                      ],
-                    ),
-                  ),
-                  FlatButton(
-                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                    onPressed: () {},
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.perm_identity,
-                          color: Color.fromARGB(255, 43, 54, 62),
-                          size: 30,
-                        ),
-                        SizedBox(
-                          width: 40,
-                        ),
-                        Text(
-                          'Profile',
-                          style: TextStyle(fontSize: 16),
-                        )
-                      ],
-                    ),
-                  ),
-                  FlatButton(
-                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                    onPressed: () {},
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.pending_actions_rounded,
-                          color: Color.fromARGB(255, 43, 54, 62),
-                          size: 30,
-                        ),
-                        SizedBox(
-                          width: 40,
-                        ),
-                        Text(
-                          'My Reservations',
-                          style: TextStyle(fontSize: 16),
-                        )
-                      ],
-                    ),
-                  ),
-                  FlatButton(
-                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                    onPressed: () {},
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.phone,
-                          color: Color.fromARGB(255, 43, 54, 62),
-                          size: 30,
-                        ),
-                        SizedBox(
-                          width: 40,
-                        ),
-                        Text(
-                          'Contact Us',
-                          style: TextStyle(fontSize: 16),
-                        )
-                      ],
-                    ),
-                  ),
-                  FlatButton(
-                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                    onPressed: () {},
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.info_outline,
-                          color: Color.fromARGB(255, 43, 54, 62),
-                          size: 30,
-                        ),
-                        SizedBox(
-                          width: 40,
-                        ),
-                        Text(
-                          'About Me',
-                          style: TextStyle(fontSize: 16),
-                        )
-                      ],
-                    ),
-                  ),
-                  Spacer(),
-                  FlatButton(
-                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                    onPressed: () {
-                      Navigator.popUntil(context, ModalRoute.withName('/'));
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          'Log Out',
-                          style: TextStyle(
-                              fontSize: 21, fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(
-                          width: 40,
-                        ),
-                        Icon(
-                          Icons.logout,
-                          color: Color.fromARGB(255, 43, 54, 62),
-                          size: 30,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Search Vet or Clinic',
-                border: OutlineInputBorder(),
-                // hoverColor: Color.fromARGB(255, 43, 54, 62),
-                focusColor: Color.fromARGB(255, 43, 54, 62),
-                focusedBorder: OutlineInputBorder(),
-                prefixIcon: Icon(
-                  Icons.search,
-                  size: 35,
-                  color: Color.fromARGB(255, 43, 54, 62),
-                ),
-              ),
-            ),
-          ),
-          Container(
-            child: Text(
-              'Welcome : ${widget.text}' ?? " ",
-              style: TextStyle(
-                fontSize: 30,
-              ),
-            ),
-          ),
-          Container(
-            height: 660,
-            child: ListView(
+            body: Column(
               children: [
-                Container(
-                    height: 680,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      // physics: ClampingScrollPhysics(),
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: 3,
-                      itemBuilder: listViewCard,
-                    )),
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-                  child: Text(
-                    "How to use our App ?",
-                    style: TextStyle(fontSize: 23),
+                  padding: const EdgeInsets.all(20),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Search Vet or Clinic',
+                      border: OutlineInputBorder(),
+                      // hoverColor: Color.fromARGB(255, 43, 54, 62),
+                      focusColor: Color.fromARGB(255, 43, 54, 62),
+                      focusedBorder: OutlineInputBorder(),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        size: 35,
+                        color: Color.fromARGB(255, 43, 54, 62),
+                      ),
+                    ),
                   ),
                 ),
-                Column(
-                  children: [
-                    Card(
-                      child: ListTile(
-                        leading: Image.asset(
-                          'assets/images/search1.png',
-                          scale: 15,
-                        ),
-                        title: Text('Search '),
-                        subtitle: Text('Look for your desired Clinic or Vet'),
-                      ),
-                    ),
-                    Card(
-                      child: ListTile(
-                        leading: Image.asset(
-                          'assets/images/compare.png',
-                          scale: 15,
-                        ),
-                        title: Text('Compare & Choose '),
-                        subtitle: Text('Based on patients reviews'),
-                      ),
-                    ),
-                    Card(
-                      child: ListTile(
-                        leading: Image.asset(
-                          'assets/images/booking.png',
-                          scale: 15,
-                        ),
-                        title: Text('Book your appointment'),
-                        subtitle: Text(
-                            'With the best vets in the clinic or a personal vet'),
-                      ),
-                    ),
-                  ],
-                ),
-
-                //services
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                Container(
                   child: Text(
-                    "Services 🐾",
-                    style: TextStyle(fontSize: 23),
+                    'Welcome : ${widget.text}' ?? " ",
+                    style: TextStyle(
+                      fontSize: 30,
+                    ),
                   ),
                 ),
-
                 Container(
-                  height: 150,
+                  height: 660,
                   child: ListView(
-                    scrollDirection: Axis.horizontal,
                     children: [
                       Container(
-                        child: getService(
-                            image: 'assets/images/health.png',
-                            title: 'Health Care'),
+                          height: 680,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            // physics: ClampingScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: 3,
+                            itemBuilder: listViewCard,
+                          )),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 10),
+                        child: Text(
+                          "How to use our App ?",
+                          style: TextStyle(fontSize: 23),
+                        ),
                       ),
-                      getService(
-                          image: 'assets/images/dog-house.png',
-                          title: 'House Sitting'),
-                      getService(
-                          image: 'assets/images/visit.png',
-                          title: 'Emergency Visit'),
-                      getService(
-                          image: 'assets/images/grooming.png',
-                          title: 'Grooming'),
-                      getService(
-                          image: 'assets/images/education.png',
-                          title: 'Pet Training'),
-                      getService(
-                          image: 'assets/images/walking-the-dog.png',
-                          title: 'Dog Walking'),
-                      getService(
-                          image: 'assets/images/spray.png',
-                          title: 'Insect Control'),
+                      Column(
+                        children: [
+                          Card(
+                            child: ListTile(
+                              leading: Image.asset(
+                                'assets/images/search1.png',
+                                scale: 15,
+                              ),
+                              title: Text('Search '),
+                              subtitle:
+                                  Text('Look for your desired Clinic or Vet'),
+                            ),
+                          ),
+                          Card(
+                            child: ListTile(
+                              leading: Image.asset(
+                                'assets/images/compare.png',
+                                scale: 15,
+                              ),
+                              title: Text('Compare & Choose '),
+                              subtitle: Text('Based on patients reviews'),
+                            ),
+                          ),
+                          Card(
+                            child: ListTile(
+                              leading: Image.asset(
+                                'assets/images/booking.png',
+                                scale: 15,
+                              ),
+                              title: Text('Book your appointment'),
+                              subtitle: Text(
+                                  'With the best vets in the clinic or a personal vet'),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      //services
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 10),
+                        child: Text(
+                          "Services 🐾",
+                          style: TextStyle(fontSize: 23),
+                        ),
+                      ),
+
+                      Container(
+                        height: 150,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            Container(
+                              child: getService(
+                                  image: 'assets/images/health.png',
+                                  title: 'Health Care'),
+                            ),
+                            getService(
+                                image: 'assets/images/dog-house.png',
+                                title: 'House Sitting'),
+                            getService(
+                                image: 'assets/images/visit.png',
+                                title: 'Emergency Visit'),
+                            getService(
+                                image: 'assets/images/grooming.png',
+                                title: 'Grooming'),
+                            getService(
+                                image: 'assets/images/education.png',
+                                title: 'Pet Training'),
+                            getService(
+                                image: 'assets/images/walking-the-dog.png',
+                                title: 'Dog Walking'),
+                            getService(
+                                image: 'assets/images/spray.png',
+                                title: 'Insect Control'),
+                          ],
+                        ),
+                      ),
+
+                      SizedBox(
+                        height: 20,
+                      ),
                     ],
                   ),
-                ),
-
-                SizedBox(
-                  height: 20,
-                ),
+                )
               ],
             ),
-          )
-        ],
-      ),
-    );
+          );
   }
 
   getService({String title, String image}) {
