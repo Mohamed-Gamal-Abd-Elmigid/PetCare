@@ -7,6 +7,7 @@ import 'package:myapp/services/api.dart';
 // import 'package:myapp/services/api.dart';
 import './detailsScreen.dart';
 import 'services/api.dart' as api;
+import 'dart:async';
 
 // Future<void> main() async {
 //   DoctorApi newApi = new DoctorApi();
@@ -28,10 +29,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var doctors;
 
+  bool _saving = false;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _saving = true;
     backData();
   }
 
@@ -74,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                       backgroundColor: Colors.white,
                     ),
                     title: Text(
-                      'dsafdsaf',
+                      widget.text,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -82,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     subtitle: Text(
-                      'email@gmail.com',
+                      'KHALED@gmail.com',
                       style: TextStyle(
                         color: Colors.white,
                       ),
