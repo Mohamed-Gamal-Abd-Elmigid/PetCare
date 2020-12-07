@@ -48,238 +48,234 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return loading
-        ? Loading()
-        : Scaffold(
-            appBar: AppBar(
-              backgroundColor: Color.fromARGB(255, 43, 54, 62),
-              toolbarHeight: 77,
-              centerTitle: true,
-              title: Image(
-                image: AssetImage('assets/images/logo.png'),
-                width: 120,
-                height: 70,
-              ),
-              iconTheme: IconThemeData(
-                color: Colors.white,
-              ),
-            ),
-            drawer: Drawer(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 43, 54, 62),
+        toolbarHeight: 77,
+        centerTitle: true,
+        title: Image(
+          image: AssetImage('assets/images/logo.png'),
+          width: 120,
+          height: 70,
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.white,
+        ),
+      ),
+      drawer: Drawer(
+        child: Column(
+          children: [
+            Card(
+              elevation: 4,
               child: Column(
                 children: [
-                  Card(
-                    elevation: 4,
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 25,
-                        ),
-                        ListTile(
-                          leading: CircleAvatar(
-                            backgroundImage:
-                                AssetImage('assets/images/man.png'),
-                            backgroundColor: Colors.white,
-                          ),
-                          title: Text(
-                            'dsafdsaf',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 20,
-                            ),
-                          ),
-                          subtitle: Text(
-                            'email@gmail.com',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    color: Color.fromARGB(255, 43, 54, 62),
+                  SizedBox(
+                    height: 25,
                   ),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        FlatButton(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 20, horizontal: 20),
-                          onPressed: () {},
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.home_outlined,
-                                color: Color.fromARGB(255, 43, 54, 62),
-                                size: 30,
-                              ),
-                              SizedBox(
-                                width: 40,
-                              ),
-                              Text(
-                                'Home',
-                                style: TextStyle(fontSize: 16),
-                              )
-                            ],
-                          ),
-                        ),
-                        FlatButton(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 20, horizontal: 20),
-                          onPressed: () {},
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.perm_identity,
-                                color: Color.fromARGB(255, 43, 54, 62),
-                                size: 30,
-                              ),
-                              SizedBox(
-                                width: 40,
-                              ),
-                              Text(
-                                'Profile',
-                                style: TextStyle(fontSize: 16),
-                              )
-                            ],
-                          ),
-                        ),
-                        FlatButton(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 20, horizontal: 20),
-                          onPressed: () {},
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.pending_actions_rounded,
-                                color: Color.fromARGB(255, 43, 54, 62),
-                                size: 30,
-                              ),
-                              SizedBox(
-                                width: 40,
-                              ),
-                              Text(
-                                'My Reservations',
-                                style: TextStyle(fontSize: 16),
-                              )
-                            ],
-                          ),
-                        ),
-                        FlatButton(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 20, horizontal: 20),
-                          onPressed: () {},
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.phone,
-                                color: Color.fromARGB(255, 43, 54, 62),
-                                size: 30,
-                              ),
-                              SizedBox(
-                                width: 40,
-                              ),
-                              Text(
-                                'Contact Us',
-                                style: TextStyle(fontSize: 16),
-                              )
-                            ],
-                          ),
-                        ),
-                        FlatButton(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 20, horizontal: 20),
-                          onPressed: () {},
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.info_outline,
-                                color: Color.fromARGB(255, 43, 54, 62),
-                                size: 30,
-                              ),
-                              SizedBox(
-                                width: 40,
-                              ),
-                              Text(
-                                'About Me',
-                                style: TextStyle(fontSize: 16),
-                              )
-                            ],
-                          ),
-                        ),
-                        Spacer(),
-                        FlatButton(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 20, horizontal: 20),
-                          onPressed: () {
-                            Navigator.popUntil(
-                                context, ModalRoute.withName('/'));
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Text(
-                                'Log Out',
-                                style: TextStyle(
-                                    fontSize: 21, fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(
-                                width: 40,
-                              ),
-                              Icon(
-                                Icons.logout,
-                                color: Color.fromARGB(255, 43, 54, 62),
-                                size: 30,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                  ListTile(
+                    leading: CircleAvatar(
+                      backgroundImage: AssetImage('assets/images/man.png'),
+                      backgroundColor: Colors.white,
                     ),
-                  )
-                ],
-              ),
-            ),
-            body: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Search Vet or Clinic',
-                      border: OutlineInputBorder(),
-                      // hoverColor: Color.fromARGB(255, 43, 54, 62),
-                      focusColor: Color.fromARGB(255, 43, 54, 62),
-                      focusedBorder: OutlineInputBorder(),
-                      prefixIcon: Icon(
-                        Icons.search,
-                        size: 35,
-                        color: Color.fromARGB(255, 43, 54, 62),
+                    title: Text(
+                      'dsafdsaf',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
+                    ),
+                    subtitle: Text(
+                      'email@gmail.com',
+                      style: TextStyle(
+                        color: Colors.white,
                       ),
                     ),
                   ),
-                ),
-                Container(
-                  child: Text(
-                    'Welcome : ${widget.text}' ?? " ",
-                    style: TextStyle(
-                      fontSize: 30,
+                ],
+              ),
+              color: Color.fromARGB(255, 43, 54, 62),
+            ),
+            Expanded(
+              child: Column(
+                children: [
+                  FlatButton(
+                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                    onPressed: () {},
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.home_outlined,
+                          color: Color.fromARGB(255, 43, 54, 62),
+                          size: 30,
+                        ),
+                        SizedBox(
+                          width: 40,
+                        ),
+                        Text(
+                          'Home',
+                          style: TextStyle(fontSize: 16),
+                        )
+                      ],
                     ),
                   ),
+                  FlatButton(
+                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                    onPressed: () {},
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.perm_identity,
+                          color: Color.fromARGB(255, 43, 54, 62),
+                          size: 30,
+                        ),
+                        SizedBox(
+                          width: 40,
+                        ),
+                        Text(
+                          'Profile',
+                          style: TextStyle(fontSize: 16),
+                        )
+                      ],
+                    ),
+                  ),
+                  FlatButton(
+                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                    onPressed: () {},
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.pending_actions_rounded,
+                          color: Color.fromARGB(255, 43, 54, 62),
+                          size: 30,
+                        ),
+                        SizedBox(
+                          width: 40,
+                        ),
+                        Text(
+                          'My Reservations',
+                          style: TextStyle(fontSize: 16),
+                        )
+                      ],
+                    ),
+                  ),
+                  FlatButton(
+                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                    onPressed: () {},
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.phone,
+                          color: Color.fromARGB(255, 43, 54, 62),
+                          size: 30,
+                        ),
+                        SizedBox(
+                          width: 40,
+                        ),
+                        Text(
+                          'Contact Us',
+                          style: TextStyle(fontSize: 16),
+                        )
+                      ],
+                    ),
+                  ),
+                  FlatButton(
+                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                    onPressed: () {},
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.info_outline,
+                          color: Color.fromARGB(255, 43, 54, 62),
+                          size: 30,
+                        ),
+                        SizedBox(
+                          width: 40,
+                        ),
+                        Text(
+                          'About Me',
+                          style: TextStyle(fontSize: 16),
+                        )
+                      ],
+                    ),
+                  ),
+                  Spacer(),
+                  FlatButton(
+                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                    onPressed: () {
+                      Navigator.popUntil(context, ModalRoute.withName('/'));
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          'Log Out',
+                          style: TextStyle(
+                              fontSize: 21, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          width: 40,
+                        ),
+                        Icon(
+                          Icons.logout,
+                          color: Color.fromARGB(255, 43, 54, 62),
+                          size: 30,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: 'Search Vet or Clinic',
+                border: OutlineInputBorder(),
+                // hoverColor: Color.fromARGB(255, 43, 54, 62),
+                focusColor: Color.fromARGB(255, 43, 54, 62),
+                focusedBorder: OutlineInputBorder(),
+                prefixIcon: Icon(
+                  Icons.search,
+                  size: 35,
+                  color: Color.fromARGB(255, 43, 54, 62),
                 ),
-                Container(
-                  height: 660,
-                  child: ListView(
+              ),
+            ),
+          ),
+          Container(
+            child: Text(
+              'Welcome : ${widget.text}' ?? " ",
+              style: TextStyle(
+                fontSize: 30,
+              ),
+            ),
+          ),
+          Container(
+            height: 660,
+            child: loading
+                ? Loading()
+                : ListView(
                     children: [
                       Container(
-                          height: 680,
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            // physics: ClampingScrollPhysics(),
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: 3,
-                            itemBuilder: listViewCard,
-                          )),
+                          // height: 680,
+                          child: Column(
+                        children: doctors.sublist(0, 3).map<Widget>((doctor) {
+                          return listViewCard(doctor);
+                        }).toList(),
+
+                        // [
+                        //     listViewCard(0),
+                        //     listViewCard(1),
+                        //     listViewCard(2),
+                        //   ],
+                      )),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 15, horizontal: 10),
@@ -372,10 +368,10 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-                )
-              ],
-            ),
-          );
+          )
+        ],
+      ),
+    );
   }
 
   getService({String title, String image}) {
@@ -407,7 +403,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget listViewCard(BuildContext context, int index) {
+  Widget listViewCard(var doctor) {
+    //int index
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -428,7 +425,7 @@ class _HomePageState extends State<HomePage> {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
                     child: Text(
-                      doctors[index].name,
+                      doctor.name,
                       style: TextStyle(fontSize: 20),
                     ),
                   ),
@@ -455,7 +452,7 @@ class _HomePageState extends State<HomePage> {
                             width: 20,
                           ),
                           Text(
-                            doctors[index].address,
+                            doctor.address,
                             style: TextStyle(fontSize: 16),
                           )
                         ],
@@ -473,7 +470,7 @@ class _HomePageState extends State<HomePage> {
                           SizedBox(
                             width: 20,
                           ),
-                          Text('${doctors[index].phone ?? "Empty"}',
+                          Text('${doctor.phone ?? "Empty"}',
                               style: TextStyle(fontSize: 16))
                         ],
                       ),
@@ -490,8 +487,7 @@ class _HomePageState extends State<HomePage> {
                           SizedBox(
                             width: 20,
                           ),
-                          Text(doctors[index].email,
-                              style: TextStyle(fontSize: 16))
+                          Text(doctor.email, style: TextStyle(fontSize: 16))
                         ],
                       ),
                       RaisedButton(
