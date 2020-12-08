@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:myapp/pallete.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'detailsScreen.dart';
 import 'home.dart';
 import 'validate.dart' as valid;
 import 'services/api.dart' as api;
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_progress_button/flutter_progress_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -42,6 +42,30 @@ class _State extends State<Login> {
   }
 
   String value;
+
+  savePref(String username) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString("username", username);
+    preferences.setString("email", username);
+    print(preferences.getString("username"));
+    print(preferences.getString("email"));
+  }
+
+  getPref() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var username = preferences.getString("username");
+    var email = preferences.getString("email");
+    if (username != null && email != null) {
+      Navigator.of(context).pushNamed("HomePage");
+    }
+  }
+
+  @override
+  void initState() {
+    getPref();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -238,6 +262,8 @@ class _State extends State<Login> {
                                         nameController.text,
                                         passwordController.text);
                                     print(name);
+
+                                    savePref(nameController.text);
 
                                     if (name != null) {
                                       Navigator.of(context).push(

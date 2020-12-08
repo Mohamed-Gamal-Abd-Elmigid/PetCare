@@ -8,12 +8,7 @@ import 'package:myapp/services/api.dart';
 // import 'package:myapp/services/api.dart';
 import './detailsScreen.dart';
 import 'services/api.dart' as api;
-
-// Future<void> main() async {
-//   DoctorApi newApi = new DoctorApi();
-//   var doctors = await newApi.fetchDoctors();
-//   // print(doctors);
-// }
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   // String value;
@@ -30,10 +25,30 @@ class _HomePageState extends State<HomePage> {
   var doctors;
   bool loading = false;
 
+  var username;
+  var email;
+  bool isSignIn = false;
+
+  getPref() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    username = preferences.getString("username");
+    email = preferences.getString("email");
+
+    if (username != null) {
+      setState(() {
+        username = preferences.getString("username");
+        email = preferences.getString("email");
+        isSignIn = true;
+      });
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    getPref();
     setState(() => loading = true);
     backData();
   }
@@ -77,20 +92,24 @@ class _HomePageState extends State<HomePage> {
                       backgroundImage: AssetImage('assets/images/man.png'),
                       backgroundColor: Colors.white,
                     ),
-                    title: Text(
-                      'dsafdsaf',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
-                    ),
-                    subtitle: Text(
-                      'email@gmail.com',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
+                    title: isSignIn
+                        ? Text(
+                            username,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
+                          )
+                        : Text("NO User"),
+                    subtitle: isSignIn
+                        ? Text(
+                            username,
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          )
+                        : Text("NO Email Address"),
                   ),
                 ],
               ),
@@ -202,8 +221,11 @@ class _HomePageState extends State<HomePage> {
                   Spacer(),
                   FlatButton(
                     padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                    onPressed: () {
-                      Navigator.popUntil(context, ModalRoute.withName('/'));
+                    onPressed: () async {
+                      // Navigator.popUntil(context, ModalRoute.withName('/'));
+                      SharedPreferences preferences =
+                          await SharedPreferences.getInstance();
+                      preferences.clear();
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -246,14 +268,6 @@ class _HomePageState extends State<HomePage> {
                   size: 35,
                   color: Color.fromARGB(255, 43, 54, 62),
                 ),
-              ),
-            ),
-          ),
-          Container(
-            child: Text(
-              'Welcome : ${widget.text}' ?? " ",
-              style: TextStyle(
-                fontSize: 30,
               ),
             ),
           ),

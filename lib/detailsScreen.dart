@@ -28,17 +28,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
       appBar: AppBar(
         toolbarHeight: 77,
         backgroundColor: Color.fromARGB(255, 43, 54, 62),
-        title:
-            // Text(
-            //   "Pet Care",
-            //   style: TextStyle(
-            //     fontFamily: 'koko',
-            //     fontSize: 25,
-            //     color: Colors.white,
-            //     fontWeight: FontWeight.bold,
-            //   ),
-            // ),
-            Image(
+        title: Image(
           image: AssetImage('assets/images/logo.png'),
           width: 120,
           height: 70,
