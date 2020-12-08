@@ -4,6 +4,8 @@ import 'package:myapp/home.dart';
 import 'package:myapp/signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:petcare/screens/forget.pasword.dart';
+import 'about.dart';
+import 'contact.dart';
 import 'login.dart';
 
 // import './home.dart';
@@ -41,6 +43,8 @@ class MyApp extends StatelessWidget {
         'Home': (context) => HomePage(),
         // 'ForgetPassword': (context) => ForgetPassword(),
         'Signup': (context) => Signup(),
+        'Contact': (context) => Contact(),
+        'About': (context) => About(),
       },
     );
   }

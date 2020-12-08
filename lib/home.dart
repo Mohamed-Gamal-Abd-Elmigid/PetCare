@@ -179,8 +179,10 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   FlatButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed("Contact");
+                    },
                     padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                    onPressed: () {},
                     child: Row(
                       children: [
                         Icon(
@@ -200,7 +202,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                   FlatButton(
                     padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushNamed("About");
+                    },
                     child: Row(
                       children: [
                         Icon(
@@ -257,6 +261,9 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: const EdgeInsets.all(20),
             child: TextField(
+              style: TextStyle(
+                fontSize: 24,
+              ),
               decoration: InputDecoration(
                 hintText: 'Search Vet or Clinic',
                 border: OutlineInputBorder(),
@@ -280,7 +287,7 @@ class _HomePageState extends State<HomePage> {
                       Container(
                           // height: 680,
                           child: Column(
-                        children: doctors.sublist(0, 3).map<Widget>((doctor) {
+                        children: doctors.sublist(0, 13).map<Widget>((doctor) {
                           return listViewCard(doctor);
                         }).toList(),
 
