@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/home.dart';
+import 'package:myapp/searchResults.dart';
 import 'package:myapp/signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:petcare/screens/forget.pasword.dart';
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
         'Signup': (context) => Signup(),
         'Contact': (context) => Contact(),
         'About': (context) => About(),
+        'Search': (context) => Search(),
       },
     );
   }

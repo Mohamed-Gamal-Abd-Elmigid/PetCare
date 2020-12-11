@@ -72,28 +72,35 @@ Future<bool> register(User myUser) async {
 ////////////////////////GetDoctora/////////////////////
 ////////////////////////////////////////////////////////////
 
-// Future<List<Doctor>> fetchDoctors() async {
-//   try {
-//     http.Response response = await http.get('$baseUrl' + 'api/doctors');
-//
-//     if (response.statusCode == 200) {
-//       String data = response.body;
-//       var jsonData = jsonDecode(data);
-//       Doctors doctors = Doctors.fromJson(jsonData);
-//       List<Doctor> doctorsList =
-//           doctors.doctors.map((e) => Doctor.fromJson(e)).toList();
-//       return doctorsList;
-//     } else {
-//       print('status code =  ${response.statusCode}');
-//     }
-//   } catch (ex) {
-//     print(ex);
-//   }
-// }
-
 Future<List<Doctor>> fetchDoctors() async {
   try {
     http.Response response = await http.get('$baseUrl' + 'api/doctors');
+
+    if (response.statusCode == 200) {
+      String data = response.body;
+      var jsonData = jsonDecode(data);
+      Doctors doctors = Doctors.fromJson(jsonData);
+      List<Doctor> doctorsList =
+          doctors.doctors.map((e) => Doctor.fromJson(e)).toList();
+      return doctorsList;
+    } else {
+      print('status code =  ${response.statusCode}');
+    }
+  } catch (ex) {
+    print(ex);
+  }
+}
+
+////////////////////////////////////////////////////////////
+////////////////////////SearchDoctors/////////////////////
+////////////////////////////////////////////////////////////
+
+Future<List<Doctor>> searchDoctors(String name) async {
+  try {
+    http.Response response =
+        await http.get('$baseUrl' + 'api/doctors?name=' + name);
+
+    print(response.body);
 
     if (response.statusCode == 200) {
       String data = response.body;

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:myapp/loading.dart';
+import 'package:myapp/searchResults.dart';
 import 'package:myapp/services/api.dart';
 // import 'package:myapp/services/api.dart' as http;
 // import 'package:myapp/services/api.dart';
@@ -23,6 +24,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var doctors;
+
+  var searchDoctors;
+  TextEditingController search = TextEditingController();
+
   bool loading = false;
 
   var username;
@@ -58,6 +63,13 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       doctors = data;
       loading = false;
+    });
+  }
+
+  void searchData(String name) async {
+    var search = await api.searchDoctors(name);
+    setState(() {
+      searchDoctors = search;
     });
   }
 
@@ -256,141 +268,154 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: TextField(
-              style: TextStyle(
-                fontSize: 24,
-              ),
-              decoration: InputDecoration(
-                hintText: 'Search Vet or Clinic',
-                border: OutlineInputBorder(),
-                // hoverColor: Color.fromARGB(255, 43, 54, 62),
-                focusColor: Color.fromARGB(255, 43, 54, 62),
-                focusedBorder: OutlineInputBorder(),
-                prefixIcon: Icon(
-                  Icons.search,
-                  size: 35,
-                  color: Color.fromARGB(255, 43, 54, 62),
-                ),
-              ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: TextField(
+                  style: TextStyle(
+                    fontSize: 24,
+                  ),
+                  controller: search,
+                  decoration: InputDecoration(
+                    hintText: 'Search Vet or Clinic',
+                    border: OutlineInputBorder(),
+                    // hoverColor: Color.fromARGB(255, 43, 54, 62),
+                    focusColor: Color.fromARGB(255, 43, 54, 62),
+                    focusedBorder: OutlineInputBorder(),
+                    prefixIcon: Icon(
+                      Icons.search,
+                      size: 35,
+                      color: Color.fromARGB(255, 43, 54, 62),
+                    ),
+                  ),
+                  textInputAction: TextInputAction.search,
+                  onSubmitted: (value) {
+                    print(value);
+                    if (value != null) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (context) => Search(
+                                  text: value,
+                                )),
+                        // value: value
+                      );
+                    } else {
+                      print("False");
+                    }
+                  }),
             ),
-          ),
-          Container(
-            height: 660,
-            child: loading
-                ? Loading()
-                : ListView(
-                    children: [
-                      Container(
+            Container(
+              height: 660,
+              child: loading
+                  ? Loading()
+                  : ListView(
+                      children: [
+                        Container(
                           // height: 680,
                           child: Column(
-                        children: doctors.sublist(0, 13).map<Widget>((doctor) {
-                          return listViewCard(doctor);
-                        }).toList(),
-
-                        // [
-                        //     listViewCard(0),
-                        //     listViewCard(1),
-                        //     listViewCard(2),
-                        //   ],
-                      )),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 15, horizontal: 10),
-                        child: Text(
-                          "How to use our App ?",
-                          style: TextStyle(fontSize: 23),
+                            children:
+                                doctors.sublist(0, 2).map<Widget>((doctor) {
+                              return listViewCard(doctor);
+                            }).toList(),
+                          ),
                         ),
-                      ),
-                      Column(
-                        children: [
-                          Card(
-                            child: ListTile(
-                              leading: Image.asset(
-                                'assets/images/search1.png',
-                                scale: 15,
-                              ),
-                              title: Text('Search '),
-                              subtitle:
-                                  Text('Look for your desired Clinic or Vet'),
-                            ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 10),
+                          child: Text(
+                            "How to use our App ?",
+                            style: TextStyle(fontSize: 23),
                           ),
-                          Card(
-                            child: ListTile(
-                              leading: Image.asset(
-                                'assets/images/compare.png',
-                                scale: 15,
-                              ),
-                              title: Text('Compare & Choose '),
-                              subtitle: Text('Based on patients reviews'),
-                            ),
-                          ),
-                          Card(
-                            child: ListTile(
-                              leading: Image.asset(
-                                'assets/images/booking.png',
-                                scale: 15,
-                              ),
-                              title: Text('Book your appointment'),
-                              subtitle: Text(
-                                  'With the best vets in the clinic or a personal vet'),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      //services
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 15, horizontal: 10),
-                        child: Text(
-                          "Services 🐾",
-                          style: TextStyle(fontSize: 23),
                         ),
-                      ),
-
-                      Container(
-                        height: 150,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
+                        Column(
                           children: [
-                            Container(
-                              child: getService(
-                                  image: 'assets/images/health.png',
-                                  title: 'Health Care'),
+                            Card(
+                              child: ListTile(
+                                leading: Image.asset(
+                                  'assets/images/search1.png',
+                                  scale: 15,
+                                ),
+                                title: Text('Search '),
+                                subtitle:
+                                    Text('Look for your desired Clinic or Vet'),
+                              ),
                             ),
-                            getService(
-                                image: 'assets/images/dog-house.png',
-                                title: 'House Sitting'),
-                            getService(
-                                image: 'assets/images/visit.png',
-                                title: 'Emergency Visit'),
-                            getService(
-                                image: 'assets/images/grooming.png',
-                                title: 'Grooming'),
-                            getService(
-                                image: 'assets/images/education.png',
-                                title: 'Pet Training'),
-                            getService(
-                                image: 'assets/images/walking-the-dog.png',
-                                title: 'Dog Walking'),
-                            getService(
-                                image: 'assets/images/spray.png',
-                                title: 'Insect Control'),
+                            Card(
+                              child: ListTile(
+                                leading: Image.asset(
+                                  'assets/images/compare.png',
+                                  scale: 15,
+                                ),
+                                title: Text('Compare & Choose '),
+                                subtitle: Text('Based on patients reviews'),
+                              ),
+                            ),
+                            Card(
+                              child: ListTile(
+                                leading: Image.asset(
+                                  'assets/images/booking.png',
+                                  scale: 15,
+                                ),
+                                title: Text('Book your appointment'),
+                                subtitle: Text(
+                                    'With the best vets in the clinic or a personal vet'),
+                              ),
+                            ),
                           ],
                         ),
-                      ),
 
-                      SizedBox(
-                        height: 20,
-                      ),
-                    ],
-                  ),
-          )
-        ],
+                        //services
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 10),
+                          child: Text(
+                            "Services 🐾",
+                            style: TextStyle(fontSize: 23),
+                          ),
+                        ),
+
+                        Container(
+                          height: 150,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: [
+                              Container(
+                                child: getService(
+                                    image: 'assets/images/health.png',
+                                    title: 'Health Care'),
+                              ),
+                              getService(
+                                  image: 'assets/images/dog-house.png',
+                                  title: 'House Sitting'),
+                              getService(
+                                  image: 'assets/images/visit.png',
+                                  title: 'Emergency Visit'),
+                              getService(
+                                  image: 'assets/images/grooming.png',
+                                  title: 'Grooming'),
+                              getService(
+                                  image: 'assets/images/education.png',
+                                  title: 'Pet Training'),
+                              getService(
+                                  image: 'assets/images/walking-the-dog.png',
+                                  title: 'Dog Walking'),
+                              getService(
+                                  image: 'assets/images/spray.png',
+                                  title: 'Insect Control'),
+                            ],
+                          ),
+                        ),
+
+                        SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -432,7 +457,8 @@ class _HomePageState extends State<HomePage> {
         child: Row(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+              // padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+              padding: const EdgeInsets.all(10.0),
               child: Image(
                 image: AssetImage('assets/images/doctor1.jpg'),
                 height: 130,
@@ -447,7 +473,10 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
                     child: Text(
                       doctor.name,
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
