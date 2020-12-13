@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:myapp/Model/doctor.dart';
+import 'package:myapp/Model/services.dart';
+// import 'package:myapp/Model/services.dart';
 import 'package:myapp/Model/user.dart';
 
 String baseUrl = "https://pet-care-iti.herokuapp.com/";
@@ -71,23 +73,24 @@ Future<bool> register(User myUser) async {
 ////////////////////////////////////////////////////////////
 ////////////////////////GetDoctora/////////////////////
 ////////////////////////////////////////////////////////////
-
+// /<Doctor>
 Future<List<Doctor>> fetchDoctors() async {
-  try {
-    http.Response response = await http.get('$baseUrl' + 'api/doctors');
+  http.Response response = await http.get('$baseUrl' + 'api/doctors');
 
-    if (response.statusCode == 200) {
-      String data = response.body;
-      var jsonData = jsonDecode(data);
-      Doctors doctors = Doctors.fromJson(jsonData);
-      List<Doctor> doctorsList =
-          doctors.doctors.map((e) => Doctor.fromJson(e)).toList();
-      return doctorsList;
-    } else {
-      print('status code =  ${response.statusCode}');
-    }
-  } catch (ex) {
-    print(ex);
+  if (response.statusCode == 200) {
+    String data = response.body;
+    var jsonData = jsonDecode(data);
+    List<Doctor> result = [];
+    jsonData["data"].forEach((d) => {result.add(Doctor.fromJson(d))});
+    // Doctors doctors = Doctors.fromJson(jsonData);
+    // List<Doctor> doctorsList =
+    //     doctors.doctors.map((e) => Doctor.fromJson(e)).toList();
+
+    return result;
+
+    // return jsonData["data"];
+  } else {
+    print('status code =  ${response.statusCode}');
   }
 }
 
@@ -105,10 +108,32 @@ Future<List<Doctor>> searchDoctors(String name) async {
     if (response.statusCode == 200) {
       String data = response.body;
       var jsonData = jsonDecode(data);
-      Doctors doctors = Doctors.fromJson(jsonData);
-      List<Doctor> doctorsList =
-          doctors.doctors.map((e) => Doctor.fromJson(e)).toList();
-      return doctorsList;
+      List<Doctor> result = [];
+      jsonData["data"].forEach((d) => {result.add(Doctor.fromJson(d))});
+      return result;
+    } else {
+      print('status code =  ${response.statusCode}');
+    }
+  } catch (ex) {
+    print(ex);
+  }
+}
+
+////////////////////////////////////////////////////////////
+////////////////////////FetchServices/////////////////////
+////////////////////////////////////////////////////////////
+
+Future<List<Service>> fetchServices() async {
+  try {
+    http.Response response = await http.get('$baseUrl' + 'api/services');
+
+    if (response.statusCode == 200) {
+      print(response.body);
+      String serData = response.body;
+      var serJsonData = jsonDecode(serData);
+      Services service = Services.fromMap(serJsonData);
+      print(service.data.length);
+      return service.data;
     } else {
       print('status code =  ${response.statusCode}');
     }

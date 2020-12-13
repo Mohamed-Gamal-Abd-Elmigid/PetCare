@@ -1,27 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:myapp/Model/doctor.dart';
+import 'package:myapp/services.dart';
 
-class Service {
-  final String name;
-  bool selected;
-  Service(this.name, {this.selected = false});
-}
+// class Service {
+//   // final String name;
+//   // bool selected;
+//   Doctor doctor;
+//   Service(this.doctor);
+// }
 
 class DetailsScreen extends StatefulWidget {
+  Doctor doctor;
+  DetailsScreen({Key key, @required this.doctor, Key data}) : super(key: key);
+
   @override
   _DetailsScreenState createState() => _DetailsScreenState();
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
-  List<Service> services = [
-    Service("Emergency Visit"),
-    Service("Health Care"),
-    Service("Insect Control"),
-    Service("Dog Walking"),
-    Service("Pet Training"),
-    Service("House Sitting"),
-    Service("Grooming")
-  ];
+  // List<Service> services = [
+  //   Service("Emergency Visit"),
+  //   Service("Health Care"),
+  //   Service("Insect Control"),
+  //   Service("Dog Walking"),
+  //   Service("Pet Training"),
+  //   Service("House Sitting"),
+  //   Service("Grooming")
+  // ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +66,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     ),
                     Container(
                       alignment: Alignment.center,
-                      child: Text("Cynthia Valentin, PhD, APNP",
+                      child: Text(widget.doctor.name,
                           style: TextStyle(
                               fontSize: 22, fontWeight: FontWeight.bold)),
                     ),
@@ -231,15 +238,20 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       ),
                     ),
                     Container(
-                      height: 175,
+                      height: 150,
+                      width: MediaQuery.of(context).size.width,
+                      alignment: Alignment.center,
                       color: Colors.grey.shade100,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          reservationWidget(day: "Satarday"),
-                          reservationWidget(day: "Sunday"),
-                          reservationWidget(day: "Monday"),
-                        ],
+                      child: Container(
+                        width: 100.0 * widget.doctor.availabeDayes.length,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: widget.doctor.availabeDayes.length,
+                          itemBuilder: (context, index) {
+                            return reservationWidget(
+                                avDay: widget.doctor.availabeDayes[index]);
+                          },
+                        ),
                       ),
                     ),
                     Divider(
@@ -247,60 +259,77 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       color: Colors.black38,
                       height: 0,
                     ),
-                    Container(
-                      padding: EdgeInsets.only(bottom: 10),
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.only(top: 15),
-                      child: Text(
-                        "Choose the required services",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.right,
-                      ),
-                    ),
-                    Container(
-                      height: (services.length / 2 + 0.5) *
-                          MediaQuery.of(context).size.width /
-                          6,
-                      child: GridView.count(
-                          physics: BouncingScrollPhysics(),
-                          crossAxisCount: 2,
-                          childAspectRatio: 3,
-                          padding: const EdgeInsets.all(4.0),
-                          mainAxisSpacing: 4.0,
-                          crossAxisSpacing: 4.0,
-                          children: services.map((service) {
-                            return GridTile(
-                              child: Container(
-                                child: Row(
-                                  children: [
-                                    Checkbox(
-                                        value: service.selected,
-                                        // checkColor: Color.fromARGB(255, 43, 54, 62),
-                                        activeColor:
-                                            Color.fromARGB(255, 43, 54, 62),
-                                        onChanged: (v) {
-                                          setState(() {
-                                            service.selected = v;
-                                          });
-                                        }),
-                                    Text(
-                                      service.name,
-                                      style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 43, 54, 62),
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          }).toList()),
-                    ),
+                    // Container(
+                    //   padding: EdgeInsets.only(bottom: 10),
+                    //   alignment: Alignment.center,
+                    //   margin: EdgeInsets.only(top: 15),
+                    //   child: Text(
+                    //     "Choose the required services",
+                    //     style: TextStyle(
+                    //         fontSize: 18, fontWeight: FontWeight.bold),
+                    //     textAlign: TextAlign.right,
+                    //   ),
+                    // ),
+                    // Container(
+                    //   height: (services.length / 2 + 0.5) *
+                    //       MediaQuery.of(context).size.width /
+                    //       6,
+                    //   child: GridView.count(
+                    //       physics: BouncingScrollPhysics(),
+                    //       crossAxisCount: 2,
+                    //       childAspectRatio: 3,
+                    //       padding: const EdgeInsets.all(4.0),
+                    //       mainAxisSpacing: 4.0,
+                    //       crossAxisSpacing: 4.0,
+                    //       children: services.map((service) {
+                    //         return GridTile(
+                    //           child: Container(
+                    //             child: Row(
+                    //               children: [
+                    //                 Checkbox(
+                    //                     value: service.selected,
+                    //                     // checkColor: Color.fromARGB(255, 43, 54, 62),
+                    //                     activeColor:
+                    //                         Color.fromARGB(255, 43, 54, 62),
+                    //                     onChanged: (v) {
+                    //                       setState(() {
+                    //                         service.selected = v;
+                    //                       });
+                    //                     }),
+                    //                 Text(
+                    //                   service.name,
+                    //                   style: TextStyle(
+                    //                       color:
+                    //                           Color.fromARGB(255, 43, 54, 62),
+                    //                       fontSize: 14,
+                    //                       fontWeight: FontWeight.bold),
+                    //                 ),
+                    //               ],
+                    //             ),
+                    //           ),
+                    //         );
+                    //       }).toList()),
+                    // ),
                     SizedBox(
                       height: 20,
-                    )
+                    ),
+                    // RaisedButton(
+                    //     child: Text(
+                    //       'More Details',
+                    //       style: TextStyle(
+                    //         color: Colors.white,
+                    //       ),
+                    //     ),
+                    //     color: Color.fromARGB(255, 43, 54, 62),
+                    //     onPressed: () {
+                    //       // var name = doctor["name"];
+                    //       Navigator.of(context).push(
+                    //         MaterialPageRoute(
+                    //             builder: (context) => Services(
+                    //                 // text: doctor,
+                    //                 )),
+                    //       );
+                    //     }),
                   ],
                 ),
               ),
@@ -314,10 +343,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
     );
   }
 
-  Widget reservationWidget(
-      {String day,
-      String fromDate = "F 7:00 PM",
-      String toDate = "T 9:00 PM"}) {
+  Widget reservationWidget({AvailabeDaye avDay}) {
     return Container(
       width: 75,
       height: 150,
@@ -336,7 +362,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: Text(
-                  day,
+                  avDay.day ?? "",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
@@ -350,24 +376,43 @@ class _DetailsScreenState extends State<DetailsScreen> {
               width: 75,
               alignment: Alignment.center,
               color: Colors.white,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    fromDate,
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 43, 54, 62),
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    toDate,
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 43, 54, 62),
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
+              child: ListView.builder(
+                itemCount: avDay.times.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 15.0),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => Services(
+                                  doctorID: widget.doctor.id,
+                                  date:
+                                      "${avDay.day} ${avDay.times[index].from} ${avDay.times[index].to}",
+                                  services: widget.doctor.services,
+                                )));
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            avDay.times[index].from,
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 43, 54, 62),
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            avDay.times[index].to,
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 43, 54, 62),
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
           ),

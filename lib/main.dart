@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/home.dart';
+import 'package:myapp/profile.dart';
 import 'package:myapp/searchResults.dart';
 import 'package:myapp/signup.dart';
+import 'package:myapp/splashScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:petcare/screens/forget.pasword.dart';
 import 'about.dart';
@@ -40,13 +42,16 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: isLogin ? "Home" : '/',
       routes: {
-        '/': (context) => Login(),
+        '/': (context) => SplashScreenPage(),
         'Home': (context) => HomePage(),
         // 'ForgetPassword': (context) => ForgetPassword(),
         'Signup': (context) => Signup(),
         'Contact': (context) => Contact(),
         'About': (context) => About(),
         'Search': (context) => Search(),
+        'Profile': (context) => Profile(),
+
+        // 'SplashScreenPage': (context) => SplashScreenPage(),
       },
     );
   }

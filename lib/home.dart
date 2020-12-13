@@ -2,20 +2,23 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:myapp/Model/services.dart';
 import 'package:myapp/loading.dart';
 import 'package:myapp/searchResults.dart';
 import 'package:myapp/services/api.dart';
-// import 'package:myapp/services/api.dart' as http;
-// import 'package:myapp/services/api.dart';
-import './detailsScreen.dart';
+
+import './detailsScreen.dart' as d;
+import 'Model/doctor.dart';
 import 'services/api.dart' as api;
 import 'package:shared_preferences/shared_preferences.dart';
+// import 'Model/services.dart';
 
 class HomePage extends StatefulWidget {
   // String value;
   // HomePage({this.value});
 
   var text;
+
   HomePage({Key key, @required this.text, Key data}) : super(key: key);
 
   @override
@@ -23,7 +26,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var doctors;
+  List<Doctor> doctors;
+  List<Service> services;
 
   var searchDoctors;
   TextEditingController search = TextEditingController();
@@ -49,6 +53,14 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  void getServices() async {
+    List<Service> service = await api.fetchServices();
+    setState(() {
+      // print(service[0]);
+      services = service;
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -56,10 +68,13 @@ class _HomePageState extends State<HomePage> {
     getPref();
     setState(() => loading = true);
     backData();
+
+    getServices();
   }
 
   void backData() async {
-    var data = await api.fetchDoctors();
+    List<Doctor> data = await api.fetchDoctors();
+    print('THIS IS FROM AFTER REPAIR ${data}');
     setState(() {
       doctors = data;
       loading = false;
@@ -152,7 +167,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                   FlatButton(
                     padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushNamed("Profile");
+                    },
                     child: Row(
                       children: [
                         Icon(
@@ -316,7 +333,7 @@ class _HomePageState extends State<HomePage> {
                           // height: 680,
                           child: Column(
                             children:
-                                doctors.sublist(0, 2).map<Widget>((doctor) {
+                                doctors.sublist(0, 3).map<Widget>((doctor) {
                               return listViewCard(doctor);
                             }).toList(),
                           ),
@@ -376,35 +393,77 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
 
+                        // Container(
+                        //   height: 150,
+                        //   child: ListView(
+                        //     scrollDirection: Axis.horizontal,
+                        //     children: [
+                        //       Container(
+                        //         child: getService(
+                        //             image: 'assets/images/health.png',
+                        //             title: 'Health Care'),
+                        //       ),
+                        //       getService(
+                        //           image: 'assets/images/dog-house.png',
+                        //           title: 'House Sitting'),
+                        //       getService(
+                        //           image: 'assets/images/visit.png',
+                        //           title: 'Emergency Visit'),
+                        //       getService(
+                        //           image: 'assets/images/grooming.png',
+                        //           title: 'Grooming'),
+                        //       getService(
+                        //           image: 'assets/images/education.png',
+                        //           title: 'Pet Training'),
+                        //       getService(
+                        //           image: 'assets/images/walking-the-dog.png',
+                        //           title: 'Dog Walking'),
+                        //       getService(
+                        //           image: 'assets/images/spray.png',
+                        //           title: 'Insect Control'),
+                        //     ],
+                        //   ),
+                        // ),
+
                         Container(
-                          height: 150,
-                          child: ListView(
+                          height: 200,
+                          child: ListView.builder(
+                            shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
-                            children: [
-                              Container(
-                                child: getService(
-                                    image: 'assets/images/health.png',
-                                    title: 'Health Care'),
-                              ),
-                              getService(
-                                  image: 'assets/images/dog-house.png',
-                                  title: 'House Sitting'),
-                              getService(
-                                  image: 'assets/images/visit.png',
-                                  title: 'Emergency Visit'),
-                              getService(
-                                  image: 'assets/images/grooming.png',
-                                  title: 'Grooming'),
-                              getService(
-                                  image: 'assets/images/education.png',
-                                  title: 'Pet Training'),
-                              getService(
-                                  image: 'assets/images/walking-the-dog.png',
-                                  title: 'Dog Walking'),
-                              getService(
-                                  image: 'assets/images/spray.png',
-                                  title: 'Insect Control'),
-                            ],
+                            itemCount: 7,
+                            itemBuilder: (context, index) {
+                              return FlatButton(
+                                onPressed: () {},
+                                child: Container(
+                                  width: 140,
+                                  child: Card(
+                                    child: Column(
+                                      children: [
+                                        Image(
+                                          image: NetworkImage(
+                                              services[index].image),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              0, 15, 0, 0),
+                                          child: Text(
+                                            services[index].title,
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              color: Color.fromARGB(
+                                                  255, 43, 54, 62),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         ),
 
@@ -420,36 +479,36 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  getService({String title, String image}) {
-    return FlatButton(
-      onPressed: () {},
-      child: Container(
-        width: 140,
-        child: Card(
-          child: Column(
-            children: [
-              Image.asset(
-                image,
-                scale: 5,
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-                child: Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Color.fromARGB(255, 43, 54, 62),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  // getService({String title, String image}) {
+  //   return FlatButton(
+  //     onPressed: () {},
+  //     child: Container(
+  //       width: 140,
+  //       child: Card(
+  //         child: Column(
+  //           children: [
+  //             Image.asset(
+  //               image,
+  //               scale: 5,
+  //             ),
+  //             Padding(
+  //               padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+  //               child: Text(
+  //                 title,
+  //                 style: TextStyle(
+  //                   fontSize: 16,
+  //                   color: Color.fromARGB(255, 43, 54, 62),
+  //                 ),
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  Widget listViewCard(var doctor) {
+  Widget listViewCard(Doctor doctor) {
     //int index
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -540,6 +599,22 @@ class _HomePageState extends State<HomePage> {
                           Text(doctor.email, style: TextStyle(fontSize: 16))
                         ],
                       ),
+                      // RaisedButton(
+                      //     child: Text(
+                      //       'More Details',
+                      //       style: TextStyle(
+                      //         color: Colors.white,
+                      //       ),
+                      //     ),
+                      //     color: Color.fromARGB(255, 43, 54, 62),
+                      //     onPressed: () {
+                      //       Navigator.push(
+                      //         context,
+                      //         MaterialPageRoute(
+                      //             builder: (context) => DetailsScreen()),
+                      //       );
+                      //     }),
+
                       RaisedButton(
                           child: Text(
                             'More Details',
@@ -549,10 +624,12 @@ class _HomePageState extends State<HomePage> {
                           ),
                           color: Color.fromARGB(255, 43, 54, 62),
                           onPressed: () {
-                            Navigator.push(
-                              context,
+                            var name = doctor.name;
+                            Navigator.of(context).push(
                               MaterialPageRoute(
-                                  builder: (context) => DetailsScreen()),
+                                  builder: (context) => d.DetailsScreen(
+                                        doctor: doctor,
+                                      )),
                             );
                           }),
                       SizedBox(
