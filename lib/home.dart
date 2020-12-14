@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
 
   void backData() async {
     List<Doctor> data = await api.fetchDoctors();
-    print('THIS IS FROM AFTER REPAIR ${data}');
+    // print('THIS IS FROM AFTER REPAIR ${data}');
     setState(() {
       doctors = data;
       loading = false;
@@ -343,6 +343,7 @@ class _HomePageState extends State<HomePage> {
                               vertical: 15, horizontal: 10),
                           child: Text(
                             "How to use our App ?",
+                            // widget.text,
                             style: TextStyle(fontSize: 23),
                           ),
                         ),

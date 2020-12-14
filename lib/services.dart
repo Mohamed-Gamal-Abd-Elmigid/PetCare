@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/Model/doctor.dart';
 import 'package:myapp/home.dart';
+import 'package:myapp/login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'services/api.dart' as api;
 
-class Service {
+class ServiceID {
   final String name;
+  final String image;
   bool selected;
-  Service(this.name, {this.selected = false});
+  ServiceID(this.name, this.image, {this.selected = false});
 }
 
 class Services extends StatefulWidget {
@@ -20,23 +24,25 @@ class Services extends StatefulWidget {
 }
 
 class _ServicesState extends State<Services> {
-  bool checkBoxValue1 = false;
-  bool checkBoxValue2 = false;
-  bool checkBoxValue3 = false;
-  bool checkBoxValue4 = false;
-  bool checkBoxValue5 = false;
-  bool checkBoxValue6 = false;
-  bool checkBoxValue7 = false;
+  List<ServiceID> arr = [];
 
-  List<Service> services = [
-    Service("Emergency Visit"),
-    Service("Health Care"),
-    Service("Insect Control"),
-    Service("Dog Walking"),
-    Service("Pet Training"),
-    Service("House Sitting"),
-    Service("Grooming")
-  ];
+  String token;
+
+  getPref() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    token = preferences.getString("token");
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getPref();
+    widget.services.forEach((element) {
+      arr.add(ServiceID(element.title, element.image));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +85,7 @@ class _ServicesState extends State<Services> {
             Expanded(
               child: ListView.builder(
                 padding: const EdgeInsets.all(20.0),
-                itemCount: widget.services.length,
+                itemCount: arr.length,
                 itemBuilder: (context, index) {
                   return Container(
                     width: 400,
@@ -119,12 +125,12 @@ class _ServicesState extends State<Services> {
                             child: Column(
                               children: [
                                 Checkbox(
-                                  value: checkBoxValue1,
+                                  value: arr[index].selected,
                                   // checkColor: Color.fromARGB(255, 43, 54, 62),
                                   activeColor: Color.fromARGB(255, 43, 54, 62),
                                   onChanged: (v1) {
                                     setState(() {
-                                      checkBoxValue1 = v1;
+                                      arr[index].selected = v1;
                                     });
                                   },
                                 ),
@@ -162,11 +168,26 @@ class _ServicesState extends State<Services> {
                     ),
                   ),
                   color: Color.fromARGB(255, 43, 54, 62),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
-                    );
+                  onPressed: () async {
+                    if (token == null) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Login(),
+                        ),
+                      );
+                      return;
+                    }
+                    List<String> serviceID = [];
+                    for (int i = 0; i < arr.length; i++) {
+                      if (arr[i].selected) {
+                        serviceID.add(widget.services[i].id);
+                      }
+                    }
+                    print(serviceID);
+                    var reserve = await api.reserve(
+                        widget.doctorID, serviceID, widget.date, token);
+                    // print(arr[0].selected);
                   },
                 ),
               ),

@@ -58,44 +58,57 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 margin: EdgeInsets.all(10),
                 child: Column(
                   children: [
-                    Container(
-                      padding:
-                          const EdgeInsets.only(right: 10, top: 10, bottom: 15),
-                      alignment: Alignment.centerRight,
-                      child: Text("Seen 231", style: TextStyle(fontSize: 16)),
+                    Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.only(
+                              right: 15, top: 10, bottom: 0),
+                          alignment: Alignment.centerRight,
+                          child:
+                              Text("Seen 231", style: TextStyle(fontSize: 16)),
+                        ),
+                        ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: Image.asset(
+                              'assets/images/doctor1.jpg',
+                              height: 100,
+                            )),
+                      ],
                     ),
-                    Container(
-                      alignment: Alignment.center,
-                      child: Text(widget.doctor.name,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Text('Dr.${widget.doctor.name}' ?? " ",
                           style: TextStyle(
                               fontSize: 22, fontWeight: FontWeight.bold)),
                     ),
                     Container(
                       alignment: Alignment.center,
-                      margin: EdgeInsets.all(15),
+                      padding: EdgeInsets.only(top: 10),
                       child: Text(
-                        "As clinic director, I hold responsibility for maintaining and environment that promotes collaborative and supportive practices",
+                        '${widget.doctor.phone ?? "Empty"}',
+                        //"As clinic director, I hold responsibility for maintaining and environment that promotes collaborative and supportive practices",
                         style: TextStyle(fontSize: 16, color: Colors.grey),
                         textAlign: TextAlign.left,
                       ),
                     ),
                     Container(
                       alignment: Alignment.center,
-                      margin: EdgeInsets.all(15),
-                      padding: EdgeInsets.only(left: 10),
+                      margin: EdgeInsets.all(10),
+                      // padding: EdgeInsets.only(left: 10),
                       child: Text(
-                        "I currently serve as the Valentin Clinic Office Manager and first point of contact for you here at the Valentin Clinic",
-                        style: TextStyle(fontSize: 16),
-                        textAlign: TextAlign.left,
-                        maxLines: 2,
+                        //doctor.email,
+                        "A veterinarian, a doctorate in pet surgery, and five years of experience in providing all pet services, including treatment, surgery, grooming and other services.",
+                        style: TextStyle(fontSize: 14, color: Colors.grey),
+                        textAlign: TextAlign.justify,
+                        maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     Container(
                       alignment: Alignment.center,
-                      width: 250,
+                      width: 200,
                       child: RatingBar.builder(
-                        initialRating: 4.5,
+                        initialRating: 3.5,
                         minRating: 1,
                         direction: Axis.horizontal,
                         allowHalfRating: true,
@@ -103,9 +116,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
                         itemBuilder: (context, _) => Icon(
                           Icons.star,
-                          color: Color.fromARGB(255, 43, 54, 62),
+                          color: Colors.yellow,
+                          //Color.fromARGB(255, 43, 54, 62),
                         ),
-                        itemSize: 35,
+                        itemSize: 20,
                         onRatingUpdate: (rating) {
                           print(rating);
                         },
@@ -130,12 +144,12 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10)),
-                margin: EdgeInsets.all(10),
+                margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
                 child: Column(
                   children: [
                     Container(
                       alignment: Alignment.center,
-                      margin: EdgeInsets.only(top: 15),
+                      margin: EdgeInsets.only(top: 20, bottom: 10),
                       child: Text(
                         "Reserve",
                         style: TextStyle(
@@ -154,32 +168,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Container(
-                            height: 100,
+                            height: 80,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Icon(
-                                  Icons.timelapse,
-                                  color: Color.fromARGB(255, 43, 54, 62),
-                                  size: 35,
-                                ),
-                                Text(
-                                  "Standby time: 1 hour",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600),
-                                )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            height: 100,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Icon(
-                                  Icons.money_sharp,
-                                  color: Color.fromARGB(255, 43, 54, 62),
+                                  Icons.money_rounded,
+                                  color: Colors.green,
                                   size: 35,
                                 ),
                                 Text(
@@ -194,6 +189,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         ],
                       ),
                     ),
+                    Divider(
+                      thickness: 1.5,
+                      color: Colors.black38,
+                    ),
                     Container(
                       child: Row(
                         // mainAxisAlignment: MainAxisAlignment.end,
@@ -207,19 +206,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             ),
                           ),
                           Text(
-                            "Nasr City: Abu Dawood Dhaheri",
-                            style: TextStyle(fontSize: 16),
+                            widget.doctor.address,
+                            style: TextStyle(
+                                fontSize: 22, fontWeight: FontWeight.bold),
                           ),
                         ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 12),
-                      child: Text(
-                        "Book now and full address details and clinic number will be send you confirmation Request For Reserve",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.start,
                       ),
                     ),
                     Divider(

@@ -42,11 +42,15 @@ class _State extends State<Login> {
   }
 
   String value;
-
-  savePref(String username) async {
+  //String username,
+  savePref(String token) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.setString("username", username);
-    preferences.setString("email", username);
+
+    // preferences.setString("username", username);
+    await preferences.setString("token", token);
+    // preferences.setString("email", username);
+
+    print(preferences.getString("token"));
     print(preferences.getString("username"));
     print(preferences.getString("email"));
   }
@@ -55,6 +59,7 @@ class _State extends State<Login> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var username = preferences.getString("username");
     var email = preferences.getString("email");
+    var token = preferences.getString("token");
     if (username != null && email != null) {
       Navigator.of(context).pushNamed("HomePage");
     }
@@ -258,18 +263,18 @@ class _State extends State<Login> {
                                   final form = loginKey.currentState;
                                   if (form.validate()) {
                                     print("true");
-                                    var name = await api.Login(
+                                    var token = await api.Login(
                                         nameController.text,
                                         passwordController.text);
-                                    print(name);
+                                    // print(name);
 
-                                    savePref(nameController.text);
+                                    await savePref(token);
 
-                                    if (name != null) {
+                                    if (token != null) {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) => HomePage(
-                                                  text: name,
+                                                  text: token,
                                                 )),
                                         // value: value
                                       );
