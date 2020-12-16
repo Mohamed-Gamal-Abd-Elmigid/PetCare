@@ -24,20 +24,58 @@ Future<String> Login(String email, String password) async {
       headers: header, body: body);
 
   if (futurePost.statusCode == 200) {
-    // print(futurePost.body);
-    // print(futurePost.body)
     var title = json.decode(futurePost.body)["data"]["name"];
-    var token = json.decode(futurePost.body)["token"];
-    //sucess
+    // var token = json.decode(futurePost.body)["token"];
+    // var response = json.decode(futurePost.body)["data"];
     // print(title);
     // print(token);
-    // print(futurePost.body);
-    return token;
+
+    // print(title);
+    return title;
   } else {
-    print(futurePost.body);
     print(futurePost.statusCode);
     return null;
     // throw Exception('can not load post data');
+  }
+}
+
+Future<String> emailLogin(String email, String password) async {
+  Map<String, String> header = {
+    "Accept": "application/json",
+  };
+  Map<String, String> body = {
+    "email": email,
+    "password": password,
+  };
+  http.Response futurePost = await http.post('$baseUrl' + 'api/users/login',
+      headers: header, body: body);
+
+  if (futurePost.statusCode == 200) {
+    var title = json.decode(futurePost.body)["data"]["email"];
+    return title;
+  } else {
+    print(futurePost.statusCode);
+    return null;
+  }
+}
+
+Future<String> token(String email, String password) async {
+  Map<String, String> header = {
+    "Accept": "application/json",
+  };
+  Map<String, String> body = {
+    "email": email,
+    "password": password,
+  };
+  http.Response futurePost = await http.post('$baseUrl' + 'api/users/login',
+      headers: header, body: body);
+
+  if (futurePost.statusCode == 200) {
+    var token = json.decode(futurePost.body)["token"];
+    return token;
+  } else {
+    print(futurePost.statusCode);
+    return null;
   }
 }
 

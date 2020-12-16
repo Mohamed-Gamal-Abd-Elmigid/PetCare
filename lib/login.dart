@@ -43,12 +43,12 @@ class _State extends State<Login> {
 
   String value;
   //String username,
-  savePref(String token) async {
+  savePref(String token, String username) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
-    // preferences.setString("username", username);
+    preferences.setString("username", username);
     await preferences.setString("token", token);
-    // preferences.setString("email", username);
+    preferences.setString("email", username);
 
     print(preferences.getString("token"));
     print(preferences.getString("username"));
@@ -263,18 +263,20 @@ class _State extends State<Login> {
                                   final form = loginKey.currentState;
                                   if (form.validate()) {
                                     print("true");
-                                    var token = await api.Login(
+                                    var name = await api.Login(
                                         nameController.text,
                                         passwordController.text);
                                     // print(name);
 
-                                    await savePref(token);
+                                    print(name);
 
-                                    if (token != null) {
+                                    // await savePref(response[""]);
+
+                                    if (name != null) {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) => HomePage(
-                                                  text: token,
+                                                  nameText: name,
                                                 )),
                                         // value: value
                                       );

@@ -17,9 +17,11 @@ class HomePage extends StatefulWidget {
   // String value;
   // HomePage({this.value});
 
-  var text;
+  var nameText;
+  // var emailText;
+  // var token;this.emailText,
 
-  HomePage({Key key, @required this.text, Key data}) : super(key: key);
+  HomePage({Key key, @required this.nameText, Key data}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -119,24 +121,21 @@ class _HomePageState extends State<HomePage> {
                       backgroundImage: AssetImage('assets/images/man.png'),
                       backgroundColor: Colors.white,
                     ),
-                    title: isSignIn
-                        ? Text(
-                            username,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 20,
-                            ),
-                          )
-                        : Text("NO User"),
-                    subtitle: isSignIn
-                        ? Text(
-                            username,
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          )
-                        : Text("NO Email Address"),
+                    title: Text(
+                      widget.nameText,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
+                    ),
+                    subtitle: Text(
+                      // widget.emailText,
+                      'sadasd',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ],
               ),
