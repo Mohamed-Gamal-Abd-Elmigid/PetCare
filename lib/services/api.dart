@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:myapp/Model/doctor.dart';
+import 'package:myapp/Model/reserve.dart';
 import 'package:myapp/Model/services.dart';
 // import 'package:myapp/Model/services.dart';
 import 'package:myapp/Model/user.dart';
+import 'package:myapp/Model/userModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 String baseUrl = "https://pet-care-iti.herokuapp.com/";
@@ -25,21 +27,17 @@ Future<String> Login(String email, String password) async {
 
   if (futurePost.statusCode == 200) {
     var title = json.decode(futurePost.body)["data"]["name"];
-    // var token = json.decode(futurePost.body)["token"];
-    // var response = json.decode(futurePost.body)["data"];
-    // print(title);
-    // print(token);
 
-    // print(title);
     return title;
   } else {
+    print(futurePost.body);
     print(futurePost.statusCode);
     return null;
     // throw Exception('can not load post data');
   }
 }
 
-Future<String> emailLogin(String email, String password) async {
+Future<String> email(String email, String password) async {
   Map<String, String> header = {
     "Accept": "application/json",
   };
@@ -56,6 +54,7 @@ Future<String> emailLogin(String email, String password) async {
   } else {
     print(futurePost.statusCode);
     return null;
+    // throw Exception('can not load post data');
   }
 }
 
@@ -71,11 +70,12 @@ Future<String> token(String email, String password) async {
       headers: header, body: body);
 
   if (futurePost.statusCode == 200) {
-    var token = json.decode(futurePost.body)["token"];
-    return token;
+    var title = json.decode(futurePost.body)["token"];
+    return title;
   } else {
     print(futurePost.statusCode);
     return null;
+    // throw Exception('can not load post data');
   }
 }
 
@@ -120,10 +120,6 @@ Future<List<Doctor>> fetchDoctors() async {
     var jsonData = jsonDecode(data);
     List<Doctor> result = [];
     jsonData["data"].forEach((d) => {result.add(Doctor.fromJson(d))});
-    // Doctors doctors = Doctors.fromJson(jsonData);
-    // List<Doctor> doctorsList =
-    //     doctors.doctors.map((e) => Doctor.fromJson(e)).toList();
-
     return result;
 
     // return jsonData["data"];
@@ -171,7 +167,6 @@ Future<List<Service>> fetchServices() async {
       String serData = response.body;
       var serJsonData = jsonDecode(serData);
       Services service = Services.fromMap(serJsonData);
-      // print(service.data.length);
       return service.data;
     } else {
       print('status code =  ${response.statusCode}');
@@ -185,28 +180,138 @@ Future<List<Service>> fetchServices() async {
 ////////////////////////Reservation/////////////////////
 ////////////////////////////////////////////////////////////
 
-Future<bool> reserve(
+Future<String> reserve(
     String doctorID, List<String> services, String date, String token) async {
+  Map<String, String> header = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": token,
+  };
+
+  Map<String, dynamic> body = {
+    "doctorId": doctorID,
+    "services": services,
+    "date": date,
+  };
+  // print(token);
+  http.Response futurePost = await http.put('$baseUrl' + 'api/reservations',
+      headers: header, body: jsonEncode(body));
+  // print(futurePost.body);
+
+  if (futurePost.statusCode == 200) {
+    var id = jsonDecode(futurePost.body)["data"]["_id"];
+
+    print('THIS IS ID RESERVATION {$id}');
+
+    return id;
+  } else {
+    return "NOT GET ID RESEVATION";
+    // throw Exception('can not load post data');
+  }
+}
+
+////////////////////////////////////////////////////////////
+////////////////////////GET RESERVATION/////////////////////
+////////////////////////////////////////////////////////////
+
+Future<List<Reserve>> getReservations(String token) async {
+  Map<String, String> header = {
+    "Content-Type": "application/json",
+    "Authorization": token,
+  };
+  http.Response futurePost =
+      await http.get('$baseUrl' + 'api/reservations', headers: header);
+
+  if (futurePost.statusCode == 200) {
+    String data = futurePost.body;
+    var jsonData = jsonDecode(data);
+    List<Reserve> result = [];
+    jsonData["data"].forEach((d) => {result.add(Reserve.fromJson(d))});
+    return result;
+  } else {
+    print('status code =  ${futurePost.statusCode}');
+  }
+}
+
+////////////////////////////////////////////////////////////
+////////////////////////Profile Reservation///////////////////
+////////////////////////////////////////////////////////////
+
+Future<UserModel> getUserData() async {
+  String token;
+
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+
+  token = preferences.getString("token");
+
   Map<String, String> header = {
     // "Content-Type": "application/json",
     "Accept": "application/json",
     "Authorization": token,
   };
-  Map<String, String> body = {
-    "doctorId": doctorID,
-    "services": "$services",
-    "date": date
-  };
-  print(token);
-  http.Response futurePost = await http.put('$baseUrl' + 'api/reservations',
-      headers: header, body: body);
 
-  print(futurePost.body);
+  http.Response futurePost =
+      await http.get('$baseUrl' + 'api/users/', headers: header);
 
   if (futurePost.statusCode == 200) {
-    return true;
+    var decoded = jsonDecode(futurePost.body);
+
+    return UserModel.fromJson(decoded["data"]);
   } else {
-    return false;
+    // print(futurePost.body);
+    print(futurePost.statusCode);
+    return null;
     // throw Exception('can not load post data');
   }
 }
+
+////////////////////////////////////////////////////////////
+////////////////////////DELETE RESERVATION//////////////////
+////////////////////////////////////////////////////////////
+
+Future<bool> deleteReservation(String id) async {
+  String token;
+
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+
+  token = preferences.getString("token");
+
+  Map<String, String> header = {
+    "Content-Type": "application/json",
+    "Authorization": token,
+  };
+  http.Response futurePost =
+      await http.delete('$baseUrl' + 'api/reservations/$id', headers: header);
+
+  print(futurePost.body);
+  print(futurePost.statusCode);
+
+  var message = json.decode(futurePost.body)["status"];
+
+  if (message) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+////////////////////////////////////////////////////////////
+////////////////////////DELETE RESERVATION//////////////////
+////////////////////////////////////////////////////////////
+//
+// Future<bool> updateProfile(List<String> userData, String token) async {
+//   Map<String, String> header = {
+//     "Content-Type": "application/json",
+//     "Authorization": token,
+//   };
+//   http.Response futurePost = await http.patch('$baseUrl' + 'api/users',
+//       headers: header, body: userData);
+//
+//   if (futurePost.statusCode == 200) {
+//     var message = UserModel.fromJson(json.decode((futurePost.body)["message"]));
+//     print(message);
+//     return true;
+//   } else {
+//     return false;
+//   }
+// }

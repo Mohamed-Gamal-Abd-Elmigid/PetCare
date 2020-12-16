@@ -3,13 +3,6 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:myapp/Model/doctor.dart';
 import 'package:myapp/services.dart';
 
-// class Service {
-//   // final String name;
-//   // bool selected;
-//   Doctor doctor;
-//   Service(this.doctor);
-// }
-
 class DetailsScreen extends StatefulWidget {
   Doctor doctor;
   DetailsScreen({Key key, @required this.doctor, Key data}) : super(key: key);
@@ -19,16 +12,6 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
-  // List<Service> services = [
-  //   Service("Emergency Visit"),
-  //   Service("Health Care"),
-  //   Service("Insect Control"),
-  //   Service("Dog Walking"),
-  //   Service("Pet Training"),
-  //   Service("House Sitting"),
-  //   Service("Grooming")
-  // ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

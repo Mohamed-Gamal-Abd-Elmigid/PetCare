@@ -17,11 +17,9 @@ class HomePage extends StatefulWidget {
   // String value;
   // HomePage({this.value});
 
-  var nameText;
-  // var emailText;
-  // var token;this.emailText,
+  var text;
 
-  HomePage({Key key, @required this.nameText, Key data}) : super(key: key);
+  HomePage({Key key, @required this.text, Key data}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -121,21 +119,24 @@ class _HomePageState extends State<HomePage> {
                       backgroundImage: AssetImage('assets/images/man.png'),
                       backgroundColor: Colors.white,
                     ),
-                    title: Text(
-                      widget.nameText,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
-                    ),
-                    subtitle: Text(
-                      // widget.emailText,
-                      'sadasd',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
+                    title: isSignIn
+                        ? Text(
+                            username,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
+                          )
+                        : Text("NO User"),
+                    subtitle: isSignIn
+                        ? Text(
+                            email,
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          )
+                        : Text("NO Email Address"),
                   ),
                 ],
               ),
@@ -188,7 +189,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                   FlatButton(
                     padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushNamed("Reservations");
+                    },
                     child: Row(
                       children: [
                         Icon(
@@ -393,38 +396,6 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
 
-                        // Container(
-                        //   height: 150,
-                        //   child: ListView(
-                        //     scrollDirection: Axis.horizontal,
-                        //     children: [
-                        //       Container(
-                        //         child: getService(
-                        //             image: 'assets/images/health.png',
-                        //             title: 'Health Care'),
-                        //       ),
-                        //       getService(
-                        //           image: 'assets/images/dog-house.png',
-                        //           title: 'House Sitting'),
-                        //       getService(
-                        //           image: 'assets/images/visit.png',
-                        //           title: 'Emergency Visit'),
-                        //       getService(
-                        //           image: 'assets/images/grooming.png',
-                        //           title: 'Grooming'),
-                        //       getService(
-                        //           image: 'assets/images/education.png',
-                        //           title: 'Pet Training'),
-                        //       getService(
-                        //           image: 'assets/images/walking-the-dog.png',
-                        //           title: 'Dog Walking'),
-                        //       getService(
-                        //           image: 'assets/images/spray.png',
-                        //           title: 'Insect Control'),
-                        //     ],
-                        //   ),
-                        // ),
-
                         Container(
                           height: 200,
                           child: ListView.builder(
@@ -478,35 +449,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-  // getService({String title, String image}) {
-  //   return FlatButton(
-  //     onPressed: () {},
-  //     child: Container(
-  //       width: 140,
-  //       child: Card(
-  //         child: Column(
-  //           children: [
-  //             Image.asset(
-  //               image,
-  //               scale: 5,
-  //             ),
-  //             Padding(
-  //               padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-  //               child: Text(
-  //                 title,
-  //                 style: TextStyle(
-  //                   fontSize: 16,
-  //                   color: Color.fromARGB(255, 43, 54, 62),
-  //                 ),
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Widget listViewCard(Doctor doctor) {
     //int index
@@ -599,22 +541,6 @@ class _HomePageState extends State<HomePage> {
                           Text(doctor.email, style: TextStyle(fontSize: 16))
                         ],
                       ),
-                      // RaisedButton(
-                      //     child: Text(
-                      //       'More Details',
-                      //       style: TextStyle(
-                      //         color: Colors.white,
-                      //       ),
-                      //     ),
-                      //     color: Color.fromARGB(255, 43, 54, 62),
-                      //     onPressed: () {
-                      //       Navigator.push(
-                      //         context,
-                      //         MaterialPageRoute(
-                      //             builder: (context) => DetailsScreen()),
-                      //       );
-                      //     }),
-
                       RaisedButton(
                           child: Text(
                             'More Details',

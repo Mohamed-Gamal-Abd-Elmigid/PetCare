@@ -43,16 +43,13 @@ class _State extends State<Login> {
 
   String value;
   //String username,
-  savePref(String token, String username) async {
+  savePref(String username, String email, String token) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
     preferences.setString("username", username);
-    await preferences.setString("token", token);
-    preferences.setString("email", username);
-
-    print(preferences.getString("token"));
-    print(preferences.getString("username"));
-    print(preferences.getString("email"));
+    // await preferences.setString("token", token);
+    preferences.setString("email", email);
+    preferences.setString("token", token);
   }
 
   getPref() async {
@@ -60,7 +57,7 @@ class _State extends State<Login> {
     var username = preferences.getString("username");
     var email = preferences.getString("email");
     var token = preferences.getString("token");
-    if (username != null && email != null) {
+    if (username != null && email != null && token != null) {
       Navigator.of(context).pushNamed("HomePage");
     }
   }
@@ -235,8 +232,6 @@ class _State extends State<Login> {
                       padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                       child: Center(
                         child: ProgressButton(
-                          // textColor: Colors.white,
-                          // color: Color.fromARGB(255, 43, 54, 62),
                           color: Colors.blue,
                           // disabledColor: Colors.grey,
                           animate: true,
@@ -257,26 +252,35 @@ class _State extends State<Login> {
                           onPressed: isValid
                               ? () async {
                                   await Future.delayed(Duration(seconds: 2));
-                                  print(nameController.text);
-                                  print(passwordController.text);
+                                  // print(nameController.text);
+                                  // print(passwordController.text);
                                   valid.validEmail(nameController.text);
                                   final form = loginKey.currentState;
                                   if (form.validate()) {
                                     print("true");
-                                    var name = await api.Login(
+                                    var title = await api.Login(
                                         nameController.text,
                                         passwordController.text);
-                                    // print(name);
 
-                                    print(name);
+                                    var email = await api.email(
+                                        nameController.text,
+                                        passwordController.text);
 
-                                    // await savePref(response[""]);
+                                    var token = await api.token(
+                                        nameController.text,
+                                        passwordController.text);
 
-                                    if (name != null) {
+                                    print(title);
+                                    print(email);
+                                    print(token);
+
+                                    await savePref(title, email, token);
+
+                                    if (title != null) {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) => HomePage(
-                                                  nameText: name,
+                                                  text: title,
                                                 )),
                                         // value: value
                                       );
