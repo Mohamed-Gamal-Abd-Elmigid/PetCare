@@ -19,7 +19,9 @@ class HomePage extends StatefulWidget {
   // HomePage({this.value});
 
   // var text;
-  HomePage({Key key, Key data}) : super(key: key);
+
+  bool isSignIn;
+  HomePage({Key key, this.isSignIn = true, Key data}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -36,7 +38,6 @@ class _HomePageState extends State<HomePage> {
 
   var username;
   var email;
-  bool isSignIn = false;
 
   getPref() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -48,7 +49,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         username = preferences.getString("username");
         email = preferences.getString("email");
-        isSignIn = true;
+        widget.isSignIn = true;
       });
     }
   }
@@ -120,14 +121,14 @@ class _HomePageState extends State<HomePage> {
                       backgroundColor: Colors.white,
                     ),
                     title: Text(
-                      isSignIn ? username : "Guest",
+                      username ?? "Guest",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                         fontSize: 20,
                       ),
                     ),
-                    subtitle: isSignIn
+                    subtitle: email != null
                         ? Text(
                             email,
                             style: TextStyle(
@@ -163,7 +164,7 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
-                  isSignIn
+                  widget.isSignIn
                       ? FlatButton(
                           padding: EdgeInsets.symmetric(
                               vertical: 20, horizontal: 20),
@@ -188,7 +189,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         )
                       : Container(),
-                  isSignIn
+                  widget.isSignIn
                       ? FlatButton(
                           padding: EdgeInsets.symmetric(
                               vertical: 20, horizontal: 20),
@@ -274,14 +275,14 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                          isSignIn ? 'Log Out' : " Login",
+                          widget.isSignIn ? 'Log Out' : " Login",
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                         SizedBox(
                           width: 40,
                         ),
-                        isSignIn
+                        widget.isSignIn
                             ? Icon(
                                 Icons.logout,
                                 color: Color.fromARGB(255, 43, 54, 62),
@@ -297,46 +298,45 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: TextField(
-                  style: TextStyle(
-                    fontSize: 16,
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: TextField(
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+                controller: search,
+                decoration: InputDecoration(
+                  hintText: 'Search Vet or Clinic',
+                  border: OutlineInputBorder(),
+                  // hoverColor: Color.fromARGB(255, 43, 54, 62),
+                  focusColor: Color.fromARGB(255, 43, 54, 62),
+                  focusedBorder: OutlineInputBorder(),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    size: 35,
+                    color: Color.fromARGB(255, 43, 54, 62),
                   ),
-                  controller: search,
-                  decoration: InputDecoration(
-                    hintText: 'Search Vet or Clinic',
-                    border: OutlineInputBorder(),
-                    // hoverColor: Color.fromARGB(255, 43, 54, 62),
-                    focusColor: Color.fromARGB(255, 43, 54, 62),
-                    focusedBorder: OutlineInputBorder(),
-                    prefixIcon: Icon(
-                      Icons.search,
-                      size: 35,
-                      color: Color.fromARGB(255, 43, 54, 62),
-                    ),
-                  ),
-                  textInputAction: TextInputAction.search,
-                  onSubmitted: (value) {
-                    print(value);
-                    if (value != null) {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) => Search(
-                                  text: value,
-                                )),
-                        // value: value
-                      );
-                    } else {
-                      print("False");
-                    }
-                  }),
-            ),
-            Container(
-              height: 660,
+                ),
+                textInputAction: TextInputAction.search,
+                onSubmitted: (value) {
+                  print(value);
+                  if (value != null) {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) => Search(
+                                text: value,
+                              )),
+                      // value: value
+                    );
+                  } else {
+                    print("False");
+                  }
+                }),
+          ),
+          Expanded(
+            child: Container(
               child: loading
                   ? Loading()
                   : ListView(
@@ -453,9 +453,9 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }

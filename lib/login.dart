@@ -21,7 +21,7 @@ class _State extends State<Login> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final loginKey = GlobalKey<FormState>();
-  bool isValid = false;
+  bool autoValidate = false;
 
   FocusNode myFocusNode = new FocusNode();
 
@@ -47,7 +47,6 @@ class _State extends State<Login> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
     preferences.setString("username", username);
-    // await preferences.setString("token", token);
     preferences.setString("email", email);
     preferences.setString("token", token);
   }
@@ -86,7 +85,7 @@ class _State extends State<Login> {
               padding: EdgeInsets.all(10),
               child: Form(
                 key: loginKey,
-                autovalidate: false,
+                autovalidate: autoValidate,
                 child: ListView(
                   children: <Widget>[
                     Container(
@@ -136,18 +135,6 @@ class _State extends State<Login> {
                               ? "Email is Required"
                               : null;
                         },
-                        onChanged: (value) {
-                          if (!loginKey.currentState.validate() ||
-                              passwordController.text.length < 5) {
-                            setState(() {
-                              isValid = false;
-                            });
-                          } else {
-                            setState(() {
-                              isValid = true;
-                            });
-                          }
-                        },
                       ),
                     ),
                     SizedBox(
@@ -188,29 +175,8 @@ class _State extends State<Login> {
                               borderSide: BorderSide(color: Colors.white)),
                           border: OutlineInputBorder(borderSide: BorderSide()),
                         ),
-                        validator: passwordController.text.length != 0
-                            ? (value) {
-                                return value.length < 5
-                                    ? "Required pass"
-                                    : null;
-                              }
-                            : nameController.text.length > 11
-                                ? (value) {
-                                    return value.length < 5
-                                        ? "Required pass"
-                                        : null;
-                                  }
-                                : null,
-                        onChanged: (value) {
-                          if (value.length < 6) {
-                            setState(() {
-                              isValid = false;
-                            });
-                          } else {
-                            setState(() {
-                              isValid = true;
-                            });
-                          }
+                        validator: (value) {
+                          return value.length < 5 ? "Required pass" : null;
                         },
                       ),
                     ),
@@ -237,59 +203,51 @@ class _State extends State<Login> {
                           animate: true,
                           progressWidget: const CircularProgressIndicator(
                             backgroundColor: Colors.white,
-                            strokeWidth: 23.0,
                           ),
 
                           defaultWidget: Text(
                             'Login',
                             style: TextStyle(
+                              color: Colors.white,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           // disabledColor: Colors.grey,
 
-                          onPressed: isValid
-                              ? () async {
-                                  await Future.delayed(Duration(seconds: 2));
-                                  // print(nameController.text);
-                                  // print(passwordController.text);
-                                  valid.validEmail(nameController.text);
-                                  final form = loginKey.currentState;
-                                  if (form.validate()) {
-                                    print("true");
-                                    var title = await api.Login(
-                                        nameController.text,
-                                        passwordController.text);
+                          onPressed: () async {
+                            if (!loginKey.currentState.validate()) {
+                              setState(() {
+                                autoValidate = true;
+                              });
+                            } else {
+                              print("true");
+                              var title = await api.Login(
+                                  nameController.text, passwordController.text);
 
-                                    var email = await api.email(
-                                        nameController.text,
-                                        passwordController.text);
+                              var email = await api.email(
+                                  nameController.text, passwordController.text);
 
-                                    var token = await api.token(
-                                        nameController.text,
-                                        passwordController.text);
+                              var token = await api.token(
+                                  nameController.text, passwordController.text);
 
-                                    print(title);
-                                    print(email);
-                                    print(token);
+                              print(title);
+                              print(email);
+                              print(token);
 
-                                    await savePref(title, email, token);
+                              await savePref(title, email, token);
 
-                                    if (title != null) {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) => HomePage(
-                                                // text: title,
-                                                )),
-                                        // value: value
-                                      );
-                                    }
-                                  } else {
-                                    print("False");
-                                  }
-                                }
-                              : null,
+                              if (title != null) {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (context) => HomePage(
+                                          // text: title,
+                                          )),
+                                  // value: value
+                                );
+                              }
+                            }
+                          },
                         ),
                       ),
                     ),

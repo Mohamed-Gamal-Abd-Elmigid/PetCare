@@ -100,6 +100,19 @@ Future<bool> register(User myUser) async {
   if (futurePost.statusCode == 200) {
     print(futurePost.body);
     //sucess
+
+    var token = jsonDecode(futurePost.body)["token"];
+
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    var title = await Login(myUser.email, myUser.password);
+
+    var email = await Login(myUser.email, myUser.password);
+
+    preferences.setString("username", title);
+    preferences.setString("email", email);
+    preferences.setString("token", token);
+
     return true; // Sucess
   } else {
     print(futurePost.body);

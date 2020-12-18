@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:myapp/Model/reserve.dart';
 import 'package:myapp/home.dart';
+import 'package:myapp/services/mapDirection.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'services/api.dart' as api;
+import 'package:url_launcher/url_launcher.dart';
 
 class Info extends StatefulWidget {
   Reserve information;
@@ -18,6 +20,7 @@ class _InfoState extends State<Info> {
 
   @override
   initState() {
+    // TODO: implement initState
     // TODO: implement initState
     super.initState();
     // getID();
@@ -157,7 +160,6 @@ class _InfoState extends State<Info> {
                                         width: 5,
                                       ),
                                       Container(
-                                        width: 150,
                                         child: Text(
                                           widget.information.date,
                                           style: TextStyle(
@@ -268,7 +270,13 @@ class _InfoState extends State<Info> {
                           Padding(
                             padding: const EdgeInsets.only(left: 120.0),
                             child: RaisedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                MapUtils.openMap(
+                                    widget.information.doctor.lat ??
+                                        "30.033333",
+                                    widget.information.doctor.lng ??
+                                        "31.233334");
+                              },
                               color: Color.fromARGB(255, 43, 54, 62),
                               child: Text(
                                 'Directions',
@@ -373,7 +381,7 @@ class _InfoState extends State<Info> {
                               onRatingUpdate: (rate) {
                                 rating = rate;
                               },
-                              // ignoreGestures: widget.information.status != 2,
+                              ignoreGestures: widget.information.status != 2,
                             ),
                           ),
                           Padding(

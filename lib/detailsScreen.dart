@@ -3,6 +3,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:myapp/Model/doctor.dart';
 import 'package:myapp/login.dart';
 import 'package:myapp/services.dart';
+import 'package:myapp/services/mapDirection.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DetailsScreen extends StatefulWidget {
@@ -220,7 +221,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             width: 120.0,
                           ),
                           RaisedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              MapUtils.openMap(widget.doctor.lat ?? "30.033333",
+                                  widget.doctor.lng ?? "31.233334");
+                            },
                             color: Color.fromARGB(255, 43, 54, 62),
                             child: Text(
                               'Directions',
@@ -271,77 +275,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       color: Colors.black38,
                       height: 0,
                     ),
-                    // Container(
-                    //   padding: EdgeInsets.only(bottom: 10),
-                    //   alignment: Alignment.center,
-                    //   margin: EdgeInsets.only(top: 15),
-                    //   child: Text(
-                    //     "Choose the required services",
-                    //     style: TextStyle(
-                    //         fontSize: 18, fontWeight: FontWeight.bold),
-                    //     textAlign: TextAlign.right,
-                    //   ),
-                    // ),
-                    // Container(
-                    //   height: (services.length / 2 + 0.5) *
-                    //       MediaQuery.of(context).size.width /
-                    //       6,
-                    //   child: GridView.count(
-                    //       physics: BouncingScrollPhysics(),
-                    //       crossAxisCount: 2,
-                    //       childAspectRatio: 3,
-                    //       padding: const EdgeInsets.all(4.0),
-                    //       mainAxisSpacing: 4.0,
-                    //       crossAxisSpacing: 4.0,
-                    //       children: services.map((service) {
-                    //         return GridTile(
-                    //           child: Container(
-                    //             child: Row(
-                    //               children: [
-                    //                 Checkbox(
-                    //                     value: service.selected,
-                    //                     // checkColor: Color.fromARGB(255, 43, 54, 62),
-                    //                     activeColor:
-                    //                         Color.fromARGB(255, 43, 54, 62),
-                    //                     onChanged: (v) {
-                    //                       setState(() {
-                    //                         service.selected = v;
-                    //                       });
-                    //                     }),
-                    //                 Text(
-                    //                   service.name,
-                    //                   style: TextStyle(
-                    //                       color:
-                    //                           Color.fromARGB(255, 43, 54, 62),
-                    //                       fontSize: 14,
-                    //                       fontWeight: FontWeight.bold),
-                    //                 ),
-                    //               ],
-                    //             ),
-                    //           ),
-                    //         );
-                    //       }).toList()),
-                    // ),
                     SizedBox(
                       height: 20,
                     ),
-                    // RaisedButton(
-                    //     child: Text(
-                    //       'More Details',
-                    //       style: TextStyle(
-                    //         color: Colors.white,
-                    //       ),
-                    //     ),
-                    //     color: Color.fromARGB(255, 43, 54, 62),
-                    //     onPressed: () {
-                    //       // var name = doctor["name"];
-                    //       Navigator.of(context).push(
-                    //         MaterialPageRoute(
-                    //             builder: (context) => Services(
-                    //                 // text: doctor,
-                    //                 )),
-                    //       );
-                    //     }),
                   ],
                 ),
               ),

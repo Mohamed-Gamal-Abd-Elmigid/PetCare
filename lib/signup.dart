@@ -3,6 +3,7 @@ import 'package:flutter_progress_button/flutter_progress_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:myapp/pallete.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Model/user.dart';
 import 'home.dart';
 import 'login.dart';
@@ -17,6 +18,8 @@ class Signup extends StatefulWidget {
 }
 
 class SignUpState extends State<Signup> {
+  bool autoValidate = false;
+
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
 
@@ -28,8 +31,6 @@ class SignUpState extends State<Signup> {
   final signup = GlobalKey<FormState>();
 
   FocusNode myFocusNode = new FocusNode();
-
-  bool isValid = false;
 
   @override
   Widget build(BuildContext context) {
@@ -46,15 +47,15 @@ class SignUpState extends State<Signup> {
           backgroundColor: Colors.transparent,
           body: Form(
             key: signup,
-            autovalidate: true,
+            autovalidate: autoValidate,
             child: Padding(
                 padding: EdgeInsets.all(10),
                 child: ListView(
                   children: <Widget>[
                     Container(
                       child: Image.asset("assets/images/logo.png"),
-                      width: 300,
-                      height: 200,
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      height: MediaQuery.of(context).size.width * 0.4,
                     ),
                     Container(
                       padding: EdgeInsets.fromLTRB(15, 10, 15, 0),
@@ -93,22 +94,8 @@ class SignUpState extends State<Signup> {
                             borderSide: BorderSide(),
                           ),
                         ),
-                        validator: nameController.text.length > 0
-                            ? MinLengthValidator(3, errorText: "Too Short")
-                            : null,
-
-                        onChanged: (value) {
-                          if (!signup.currentState.validate() ||
-                              emailController.text.length < 6) {
-                            setState(() {
-                              isValid = false;
-                            });
-                          } else {
-                            setState(() {
-                              isValid = true;
-                            });
-                          }
-                        },
+                        validator:
+                            MinLengthValidator(3, errorText: "Too Short"),
                       ),
                     ),
                     Container(
@@ -147,25 +134,10 @@ class SignUpState extends State<Signup> {
                             borderSide: BorderSide(),
                           ),
                         ),
-                        validator: nameController.text.length != 0
-                            ? (value) {
-                                return !valid.validEmail(value)
-                                    ? "Email is Required"
-                                    : null;
-                              }
-                            : null,
-                        //value.length < 5
-                        onChanged: (value) {
-                          if (!signup.currentState.validate() ||
-                              passwordController.text.length < 5) {
-                            setState(() {
-                              isValid = false;
-                            });
-                          } else {
-                            setState(() {
-                              isValid = true;
-                            });
-                          }
+                        validator: (value) {
+                          return !valid.validEmail(value)
+                              ? "Email is Required"
+                              : null;
                         },
                       ),
                     ),
@@ -204,31 +176,15 @@ class SignUpState extends State<Signup> {
                               borderSide: BorderSide(color: Colors.white)),
                           border: OutlineInputBorder(borderSide: BorderSide()),
                         ),
-                        validator: passwordController.text.length > 0
-                            ? MultiValidator([
-                                RequiredValidator(
-                                    errorText: 'password is required'),
-                                MinLengthValidator(6,
-                                    errorText:
-                                        'password must be at least 6 digits long'),
-                                PatternValidator(r'(?=.*?[#?!@$%^&*-])',
-                                    errorText:
-                                        'passwords must have at least one special character')
-                              ])
-                            : null,
-                        onChanged: (value) {
-                          //value.length < 6
-                          if (!signup.currentState.validate() ||
-                              confirmPassword.text.length < 5) {
-                            setState(() {
-                              isValid = false;
-                            });
-                          } else {
-                            setState(() {
-                              isValid = true;
-                            });
-                          }
-                        },
+                        validator: MultiValidator([
+                          RequiredValidator(errorText: 'password is required'),
+                          MinLengthValidator(6,
+                              errorText:
+                                  'password must be at least 6 digits long'),
+                          PatternValidator(r'(?=.*?[#?!@$%^&*-])',
+                              errorText:
+                                  'passwords must have at least one special character')
+                        ]),
                       ),
                     ),
                     Container(
@@ -266,25 +222,11 @@ class SignUpState extends State<Signup> {
                               borderSide: BorderSide(color: Colors.white)),
                           border: OutlineInputBorder(borderSide: BorderSide()),
                         ),
-                        validator: confirmPassword.text.length > 0
-                            ? (val) {
-                                if (val.isEmpty) return 'Empty';
-                                if (val != passwordController.text)
-                                  return 'Not Match';
-                                return null;
-                              }
-                            : null,
-                        onChanged: (value) {
-                          if (!signup.currentState.validate() ||
-                              addressController.text.length < 5) {
-                            setState(() {
-                              isValid = false;
-                            });
-                          } else {
-                            setState(() {
-                              isValid = true;
-                            });
-                          }
+                        validator: (val) {
+                          if (val.isEmpty) return 'Empty';
+                          if (val != passwordController.text)
+                            return 'Not Match';
+                          return null;
                         },
                       ),
                     ),
@@ -324,20 +266,7 @@ class SignUpState extends State<Signup> {
                             borderSide: BorderSide(),
                           ),
                         ),
-                        validator: addressController.text.length > 0
-                            ? RequiredValidator(errorText: "Required")
-                            : null,
-                        onChanged: (value) {
-                          if (value.isEmpty) {
-                            setState(() {
-                              isValid = false;
-                            });
-                          } else {
-                            setState(() {
-                              isValid = true;
-                            });
-                          }
-                        },
+                        validator: RequiredValidator(errorText: "Required"),
                       ),
                     ),
                     SizedBox(
@@ -356,7 +285,6 @@ class SignUpState extends State<Signup> {
                         animate: true,
                         progressWidget: const CircularProgressIndicator(
                           backgroundColor: Colors.white,
-                          strokeWidth: 23.0,
                         ),
 
                         defaultWidget: Text('Sign Up',
@@ -364,42 +292,30 @@ class SignUpState extends State<Signup> {
                               fontSize: 27,
                               fontWeight: FontWeight.bold,
                             )),
-                        onPressed: isValid
-                            ? () async {
-                                print(nameController.text);
-                                print(emailController.text);
-                                print(passwordController.text);
-                                print(confirmPassword.text);
-                                print(addressController.text);
+                        onPressed: () async {
+                          if (!signup.currentState.validate()) {
+                            setState(() {
+                              autoValidate = true;
+                            });
+                            return;
+                          } else {
+                            var result = await api.register(
+                              new User(
+                                  name: nameController.text,
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                  address: addressController.text),
+                            );
 
-                                var result = await api.register(
-                                  new User(
-                                      name: nameController.text,
-                                      email: emailController.text,
-                                      password: passwordController.text,
-                                      address: addressController.text),
-                                );
-
-                                print(result);
-
-                                var doctors = await api.fetchDoctors();
-
-                                for (var doctor in doctors) {
-                                  print(doctor.address);
-                                  print(doctor.email);
-                                  print(doctor.phone);
-                                  print(doctor.name);
-                                }
-
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => HomePage(
-                                        // text: nameController.text,
-                                        ),
-                                  ),
-                                );
-                              }
-                            : null,
+                            if (result) {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => HomePage(),
+                                ),
+                              );
+                            }
+                          }
+                        },
                         //   else {
                         //     print("False");
                         //   }

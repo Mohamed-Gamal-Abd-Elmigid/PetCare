@@ -67,9 +67,7 @@ class _ReservationsState extends State<Reservations> {
               ),
             ),
           ),
-          Container(
-            width: 400,
-            height: 600,
+          Expanded(
             child: getBody(),
           ),
           SizedBox(
@@ -87,13 +85,24 @@ class _ReservationsState extends State<Reservations> {
               child: CircularProgressIndicator(),
             ),
           )
-        : ListView.builder(
-            //reserves.length
-            itemCount: reserves.length,
-            itemBuilder: (context, index) {
-              return getCard(index);
-            },
-          );
+        : reserves.length == 0
+            ? Container(
+                child: Center(
+                    child: Text(
+                  'No Reservation Found',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )),
+              )
+            : ListView.builder(
+                //reserves.length
+                itemCount: reserves.length,
+                itemBuilder: (context, index) {
+                  return getCard(index);
+                },
+              );
   }
 
   Widget getCard(index) {
