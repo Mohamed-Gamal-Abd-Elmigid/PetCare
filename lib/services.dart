@@ -30,8 +30,8 @@ class _ServicesState extends State<Services> {
 
   getPref() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-
     token = preferences.getString("token");
+    print(token);
   }
 
   @override
@@ -169,24 +169,25 @@ class _ServicesState extends State<Services> {
                   ),
                   color: Color.fromARGB(255, 43, 54, 62),
                   onPressed: () async {
-                    if (token == null) {
+                    if (token != null) {
+                      List<String> serviceID = [];
+                      for (int i = 0; i < arr.length; i++) {
+                        if (arr[i].selected) {
+                          serviceID.add(widget.services[i].id);
+                        }
+                      }
+                      print(serviceID);
+                      var reserve = await api.reserve(
+                          widget.doctorID, serviceID, widget.date, token);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Login(),
+                          builder: (context) => HomePage(),
                         ),
                       );
                       return;
                     }
-                    List<String> serviceID = [];
-                    for (int i = 0; i < arr.length; i++) {
-                      if (arr[i].selected) {
-                        serviceID.add(widget.services[i].id);
-                      }
-                    }
-                    print(serviceID);
-                    var reserve = await api.reserve(
-                        widget.doctorID, serviceID, widget.date, token);
+
                     // print(arr[0].selected);
                   },
                 ),

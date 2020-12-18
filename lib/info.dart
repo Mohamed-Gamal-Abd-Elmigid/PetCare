@@ -14,11 +14,14 @@ class Info extends StatefulWidget {
 }
 
 class _InfoState extends State<Info> {
+  double rating;
+
   @override
   initState() {
     // TODO: implement initState
     super.initState();
     // getID();
+    // newRate();
   }
 
   deleteResrve() async {
@@ -26,6 +29,11 @@ class _InfoState extends State<Info> {
     print(delete);
     return delete;
   }
+
+  // newRate() async {
+  //   var rate = await api.updateRate(widget.information.id, rating, 1);
+  //   return rate;
+  // }
 
   String getStatus() {
     int status = widget.information.status;
@@ -73,30 +81,31 @@ class _InfoState extends State<Info> {
                   Container(
                     padding: const EdgeInsets.only(right: 10.0, top: 10.0),
                     child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                            side: BorderSide(color: Colors.white)),
-                        child: Text(
-                          'Cancel',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          side: BorderSide(color: Colors.white)),
+                      child: Text(
+                        'Cancel',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
                         ),
-                        color: Color.fromARGB(255, 43, 54, 62),
-                        onPressed: () async {
-                          bool result = await deleteResrve();
-                          print('This US RESULT $result');
-                          if (result) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => HomePage(),
-                              ),
-                            );
-                          }
-                        }),
+                      ),
+                      color: Color.fromARGB(255, 43, 54, 62),
+                      onPressed: () async {
+                        bool result = await deleteResrve();
+                        print('This US RESULT $result');
+                        if (result) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HomePage(),
+                            ),
+                          );
+                        }
+                      },
+                    ),
                   ),
                 ],
               ),
@@ -125,8 +134,6 @@ class _InfoState extends State<Info> {
                                 Padding(
                                   padding: const EdgeInsets.all(10.0),
                                   child: Text(
-                                    // 'Dr.${widget.doctor.name}' ?? " ",
-                                    // 'Dr Mohamed Gamal',
                                     widget.information.doctor.name,
                                     style: TextStyle(
                                       fontSize: 20,
@@ -258,21 +265,21 @@ class _InfoState extends State<Info> {
                               color: Colors.black,
                             ),
                           ),
-                          SizedBox(
-                            width: 120,
-                          ),
-                          RaisedButton(
-                            onPressed: () {},
-                            color: Color.fromARGB(255, 43, 54, 62),
-                            child: Text(
-                              'Directions',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: 22,
+                          Padding(
+                            padding: const EdgeInsets.only(left: 120.0),
+                            child: RaisedButton(
+                              onPressed: () {},
+                              color: Color.fromARGB(255, 43, 54, 62),
+                              child: Text(
+                                'Directions',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  fontSize: 22,
+                                ),
                               ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -349,7 +356,9 @@ class _InfoState extends State<Info> {
                             // alignment: Alignment.center,
                             width: 200,
                             child: RatingBar.builder(
-                              initialRating: widget.information.rate ?? 0,
+                              initialRating: widget.information.rate != null
+                                  ? widget.information.rate.toDouble()
+                                  : 0,
                               minRating: 1,
                               direction: Axis.horizontal,
                               allowHalfRating: true,
@@ -361,10 +370,28 @@ class _InfoState extends State<Info> {
                                 color: Color.fromARGB(255, 43, 54, 62),
                               ),
                               itemSize: 30,
-                              onRatingUpdate: (rating) {
-                                print(rating);
+                              onRatingUpdate: (rate) {
+                                rating = rate;
                               },
-                              ignoreGestures: widget.information.status != 2,
+                              // ignoreGestures: widget.information.status != 2,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 30.0),
+                            child: RaisedButton(
+                              onPressed: () async {
+                                await api.updateRate(
+                                    widget.information.id, rating);
+                              },
+                              color: Color.fromARGB(255, 43, 54, 62),
+                              child: Text(
+                                'Submit',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  fontSize: 22,
+                                ),
+                              ),
                             ),
                           ),
                         ],

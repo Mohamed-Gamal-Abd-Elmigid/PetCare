@@ -258,10 +258,8 @@ Future<UserModel> getUserData() async {
 
     return UserModel.fromJson(decoded["data"]);
   } else {
-    // print(futurePost.body);
     print(futurePost.statusCode);
     return null;
-    // throw Exception('can not load post data');
   }
 }
 
@@ -296,22 +294,68 @@ Future<bool> deleteReservation(String id) async {
 }
 
 ////////////////////////////////////////////////////////////
+////////////////////////Update Rate//////////////////
+////////////////////////////////////////////////////////////
+
+Future<String> updateRate(String reservationID, double rate) async {
+  String token;
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  token = preferences.getString("token");
+
+  Map<String, String> header = {
+    //"Content-Type": "application/json",
+    "Authorization": token,
+  };
+
+  Map<String, String> body = {
+    "reservationId": reservationID,
+    "rate": "$rate",
+  };
+  http.Response futurePost = await http.patch('$baseUrl' + 'api/reservations',
+      headers: header, body: body);
+
+  print(futurePost.body);
+  // print(futurePost.statusCode);
+
+  var messageBack = jsonDecode(futurePost.body)["message"];
+  if (futurePost.statusCode == 200) {
+    print('D5lna GWA EL IF CONDESHION LOLOLOLOLOLY');
+    print(messageBack);
+    return messageBack;
+  } else {
+    print('ERROR From ESLE HERE Y 3AAAM');
+    return 'Error';
+  }
+}
+
+////////////////////////////////////////////////////////////
 ////////////////////////DELETE RESERVATION//////////////////
 ////////////////////////////////////////////////////////////
 //
-// Future<bool> updateProfile(List<String> userData, String token) async {
-//   Map<String, String> header = {
-//     "Content-Type": "application/json",
-//     "Authorization": token,
-//   };
-//   http.Response futurePost = await http.patch('$baseUrl' + 'api/users',
-//       headers: header, body: userData);
-//
-//   if (futurePost.statusCode == 200) {
-//     var message = UserModel.fromJson(json.decode((futurePost.body)["message"]));
-//     print(message);
-//     return true;
-//   } else {
-//     return false;
-//   }
-// }
+Future<bool> updateProfile(
+    dynamic phone, String name, String email, String address) async {
+  String token;
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  token = preferences.getString("token");
+
+  Map<String, String> header = {
+    // "Content-Type": "application/json",
+    "Authorization": token,
+  };
+  Map<String, String> body = {
+    "phone": phone,
+    "name": name,
+    "email": email,
+    "address": address,
+  };
+  http.Response futurePost =
+      await http.patch('$baseUrl' + 'api/users', headers: header, body: body);
+
+  if (futurePost.statusCode == 200) {
+    var message = json.decode(futurePost.body)["message"];
+    print(message);
+    return true;
+  } else {
+    return false;
+  }
+}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:myapp/Model/user.dart';
 import 'package:myapp/Model/userModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,34 +11,43 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+
   UserModel user;
 
-  List<UserModel> arr = [];
+  // List<UserModel> arr = [];
 
   String token;
 
   getPref() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-
     token = preferences.getString("token");
   }
 
   getData() async {
     UserModel data = await api.getUserData();
-
     setState(() {
       getPref();
       user = data;
     });
+    nameController.text = user.name;
+    emailController.text = user.email;
+    addressController.text = user.address;
+    phoneController.text = user.phone;
   }
 
   bool showPassword = false;
 
   @override
   void initState() {
-    getData();
     // TODO: implement initState
     super.initState();
+    if (user == null) {
+      getData();
+    }
   }
 
   @override
@@ -122,10 +132,11 @@ class _ProfileState extends State<Profile> {
                     SizedBox(
                       height: 20,
                     ),
-                    buildTextField("Name", user.name),
-                    buildTextField("E-mail", user.email),
-                    buildTextField("Location", user.address),
-                    buildTextField("phone", user.email),
+                    buildTextField("Name", user.name, nameController),
+                    buildTextField("E-mail", user.email, emailController),
+                    buildTextField("Location", user.address, addressController),
+                    buildTextField("phone", '${user.phone ?? "No Number"}',
+                        phoneController),
                     SizedBox(
                       height: 20,
                     ),
@@ -150,20 +161,14 @@ class _ProfileState extends State<Profile> {
                         Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: RaisedButton(
-                            // onPressed: () async {
-                            //   List<String> serviceID = [];
-                            //   //
-                            //   // serviceID.add(user.name);
-                            //   // serviceID.add(user.email);
-                            //   // serviceID.add(user.address);
-                            //   // serviceID.add(user.email);
-                            //   //
-                            //   // print(serviceID);
-                            //
-                            //   // var prof =
-                            //   //     await api.updateProfile(serviceID, token);
-                            //   // print(prof);
-                            // },
+                            onPressed: () async {
+                              var updatedData = await api.updateProfile(
+                                  phoneController.text,
+                                  nameController.text,
+                                  emailController.text,
+                                  addressController.text);
+                              print(updatedData);
+                            },
                             color: Color.fromARGB(255, 43, 54, 62),
                             padding: EdgeInsets.symmetric(horizontal: 50),
                             elevation: 2,
@@ -190,10 +195,12 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Widget buildTextField(String labelText, String placeholder) {
+  Widget buildTextField(String labelText, String placeholder,
+      TextEditingController textController) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 35.0),
       child: TextField(
+        controller: textController,
         style: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.bold,

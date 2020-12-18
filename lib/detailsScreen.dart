@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:myapp/Model/doctor.dart';
+import 'package:myapp/login.dart';
 import 'package:myapp/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DetailsScreen extends StatefulWidget {
   Doctor doctor;
@@ -12,6 +14,24 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
+  bool isLogIn = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    checkLogin();
+  }
+
+  checkLogin() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    if (preferences.getString("token") != null) {
+      setState(() {
+        isLogIn = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +82,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       padding: const EdgeInsets.only(top: 10),
                       child: Text('Dr.${widget.doctor.name}' ?? " ",
                           style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.bold)),
+                              fontSize: 28, fontWeight: FontWeight.bold)),
                     ),
                     Container(
                       alignment: Alignment.center,
@@ -70,7 +90,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       child: Text(
                         '${widget.doctor.phone ?? "Empty"}',
                         //"As clinic director, I hold responsibility for maintaining and environment that promotes collaborative and supportive practices",
-                        style: TextStyle(fontSize: 16, color: Colors.grey),
+                        style: TextStyle(
+                          fontSize: 22,
+                          color: Color.fromARGB(255, 43, 54, 62),
+                        ),
                         textAlign: TextAlign.left,
                       ),
                     ),
@@ -184,7 +207,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             padding: const EdgeInsets.all(10.0),
                             child: Icon(
                               Icons.location_on,
-                              color: Colors.black45,
+                              color: Color.fromARGB(255, 43, 54, 62),
                               size: 30,
                             ),
                           ),
@@ -192,6 +215,21 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             widget.doctor.address,
                             style: TextStyle(
                                 fontSize: 22, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            width: 120.0,
+                          ),
+                          RaisedButton(
+                            onPressed: () {},
+                            color: Color.fromARGB(255, 43, 54, 62),
+                            child: Text(
+                              'Directions',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 22,
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -358,12 +396,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     child: InkWell(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Services(
-                                  doctorID: widget.doctor.id,
-                                  date:
-                                      "${avDay.day} ${avDay.times[index].from} ${avDay.times[index].to}",
-                                  services: widget.doctor.services,
-                                )));
+                            builder: (context) => isLogIn
+                                ? Services(
+                                    doctorID: widget.doctor.id,
+                                    date:
+                                        "${avDay.day} ${avDay.times[index].from} ${avDay.times[index].to}",
+                                    services: widget.doctor.services,
+                                  )
+                                : Login()));
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,

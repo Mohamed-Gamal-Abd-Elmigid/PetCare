@@ -70,11 +70,22 @@ class _SearchState extends State<Search> {
             child: Container(
               // height: 680,
               child: doctors != null
-                  ? ListView(
-                      children: doctors.map<Widget>((doctor) {
-                        return listViewCard(doctor);
-                      }).toList(),
-                    )
+                  ? doctors.length == 0
+                      ? Container(
+                          child: Center(
+                          child: Text(
+                            'Doctor Not Found',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ))
+                      : ListView(
+                          children: doctors.map<Widget>((doctor) {
+                            return listViewCard(doctor);
+                          }).toList(),
+                        )
                   : Container(),
             ),
           ),

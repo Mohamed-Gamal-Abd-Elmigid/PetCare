@@ -394,8 +394,8 @@ class SignUpState extends State<Signup> {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) => HomePage(
-                                      text: nameController.text,
-                                    ),
+                                        // text: nameController.text,
+                                        ),
                                   ),
                                 );
                               }

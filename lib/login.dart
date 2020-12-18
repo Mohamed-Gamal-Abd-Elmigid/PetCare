@@ -280,7 +280,7 @@ class _State extends State<Login> {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) => HomePage(
-                                                  text: title,
+                                                // text: title,
                                                 )),
                                         // value: value
                                       );
@@ -290,6 +290,42 @@ class _State extends State<Login> {
                                   }
                                 }
                               : null,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 24,
+                    ),
+                    Container(
+                      height: 50,
+                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      child: Center(
+                        child: ProgressButton(
+                          color: Colors.blue,
+                          // disabledColor: Colors.grey,
+                          animate: true,
+                          progressWidget: const CircularProgressIndicator(
+                            backgroundColor: Colors.white,
+                            strokeWidth: 23.0,
+                          ),
+
+                          defaultWidget: Text(
+                            'As Guest',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          // disabledColor: Colors.grey,
+
+                          onPressed: () async {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => HomePage()),
+                              // value: value
+                            );
+                          },
                         ),
                       ),
                     ),

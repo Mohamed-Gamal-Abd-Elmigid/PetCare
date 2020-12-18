@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:myapp/Model/services.dart';
 import 'package:myapp/loading.dart';
+import 'package:myapp/login.dart' as lg;
 import 'package:myapp/searchResults.dart';
 import 'package:myapp/services/api.dart';
 
@@ -17,9 +18,8 @@ class HomePage extends StatefulWidget {
   // String value;
   // HomePage({this.value});
 
-  var text;
-
-  HomePage({Key key, @required this.text, Key data}) : super(key: key);
+  // var text;
+  HomePage({Key key, Key data}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -119,16 +119,14 @@ class _HomePageState extends State<HomePage> {
                       backgroundImage: AssetImage('assets/images/man.png'),
                       backgroundColor: Colors.white,
                     ),
-                    title: isSignIn
-                        ? Text(
-                            username,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 20,
-                            ),
-                          )
-                        : Text("NO User"),
+                    title: Text(
+                      isSignIn ? username : "Guest",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 29,
+                      ),
+                    ),
                     subtitle: isSignIn
                         ? Text(
                             email,
@@ -136,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                               color: Colors.white,
                             ),
                           )
-                        : Text("NO Email Address"),
+                        : Text(" "),
                   ),
                 ],
               ),
@@ -165,50 +163,56 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
-                  FlatButton(
-                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                    onPressed: () {
-                      Navigator.of(context).pushNamed("Profile");
-                    },
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.perm_identity,
-                          color: Color.fromARGB(255, 43, 54, 62),
-                          size: 30,
-                        ),
-                        SizedBox(
-                          width: 40,
-                        ),
-                        Text(
-                          'Profile',
-                          style: TextStyle(fontSize: 16),
+                  isSignIn
+                      ? FlatButton(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 20),
+                          onPressed: () {
+                            Navigator.of(context).pushNamed("Profile");
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.perm_identity,
+                                color: Color.fromARGB(255, 43, 54, 62),
+                                size: 30,
+                              ),
+                              SizedBox(
+                                width: 40,
+                              ),
+                              Text(
+                                'Profile',
+                                style: TextStyle(fontSize: 16),
+                              )
+                            ],
+                          ),
                         )
-                      ],
-                    ),
-                  ),
-                  FlatButton(
-                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                    onPressed: () {
-                      Navigator.of(context).pushNamed("Reservations");
-                    },
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.pending_actions_rounded,
-                          color: Color.fromARGB(255, 43, 54, 62),
-                          size: 30,
-                        ),
-                        SizedBox(
-                          width: 40,
-                        ),
-                        Text(
-                          'My Reservations',
-                          style: TextStyle(fontSize: 16),
+                      : Container(),
+                  isSignIn
+                      ? FlatButton(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 20),
+                          onPressed: () {
+                            Navigator.of(context).pushNamed("Reservations");
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.pending_actions_rounded,
+                                color: Color.fromARGB(255, 43, 54, 62),
+                                size: 30,
+                              ),
+                              SizedBox(
+                                width: 40,
+                              ),
+                              Text(
+                                'My Reservations',
+                                style: TextStyle(fontSize: 16),
+                              )
+                            ],
+                          ),
                         )
-                      ],
-                    ),
-                  ),
+                      : Container(),
                   FlatButton(
                     onPressed: () {
                       Navigator.of(context).pushNamed("Contact");
@@ -261,23 +265,29 @@ class _HomePageState extends State<HomePage> {
                       SharedPreferences preferences =
                           await SharedPreferences.getInstance();
                       preferences.clear();
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => lg.Login()),
+                        // value: value
+                      );
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                          'Log Out',
+                          isSignIn ? 'Log Out' : " Login",
                           style: TextStyle(
-                              fontSize: 21, fontWeight: FontWeight.bold),
+                              fontSize: 27, fontWeight: FontWeight.bold),
                         ),
                         SizedBox(
                           width: 40,
                         ),
-                        Icon(
-                          Icons.logout,
-                          color: Color.fromARGB(255, 43, 54, 62),
-                          size: 30,
-                        ),
+                        isSignIn
+                            ? Icon(
+                                Icons.logout,
+                                color: Color.fromARGB(255, 43, 54, 62),
+                                size: 30,
+                              )
+                            : Container(),
                       ],
                     ),
                   ),
