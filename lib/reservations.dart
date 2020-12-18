@@ -61,7 +61,7 @@ class _ReservationsState extends State<Reservations> {
             child: Text(
               'Your Reservations',
               style: TextStyle(
-                fontSize: 28,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
@@ -113,7 +113,7 @@ class _ReservationsState extends State<Reservations> {
                     //reserves[index].date
                     reserves[index].doctor.name,
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -123,7 +123,7 @@ class _ReservationsState extends State<Reservations> {
                   Text(
                     reserves[index].doctor.email,
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 16,
                       color: Colors.grey.shade900,
                     ),
                   ),

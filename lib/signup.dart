@@ -61,7 +61,7 @@ class SignUpState extends State<Signup> {
                       child: TextFormField(
                         // autovalidate: true,
                         style: TextStyle(
-                          fontSize: 29,
+                          fontSize: 16,
                           color: Colors.white,
                         ),
                         controller: nameController,
@@ -72,7 +72,7 @@ class SignUpState extends State<Signup> {
                                 const EdgeInsets.symmetric(horizontal: 20.0),
                             child: Icon(
                               FontAwesomeIcons.user,
-                              size: 28,
+                              size: 18,
                               color: kWhite,
                             ),
                           ),
@@ -85,7 +85,7 @@ class SignUpState extends State<Signup> {
                           errorStyle: TextStyle(
                             color: Colors.yellow,
                             fontWeight: FontWeight.bold,
-                            fontSize: 18,
+                            fontSize: 16,
                           ),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.white)),
@@ -115,7 +115,7 @@ class SignUpState extends State<Signup> {
                       padding: EdgeInsets.fromLTRB(15, 10, 15, 0),
                       child: TextFormField(
                         style: TextStyle(
-                          fontSize: 29,
+                          fontSize: 16,
                           color: Colors.white,
                         ),
                         controller: emailController,
@@ -126,7 +126,7 @@ class SignUpState extends State<Signup> {
                                 const EdgeInsets.symmetric(horizontal: 20.0),
                             child: Icon(
                               FontAwesomeIcons.envelope,
-                              size: 28,
+                              size: 18,
                               color: kWhite,
                             ),
                           ),
@@ -139,7 +139,7 @@ class SignUpState extends State<Signup> {
                           errorStyle: TextStyle(
                             color: Colors.yellow,
                             fontWeight: FontWeight.bold,
-                            fontSize: 18,
+                            fontSize: 16,
                           ),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.white)),
@@ -174,7 +174,7 @@ class SignUpState extends State<Signup> {
                       child: TextFormField(
                         obscureText: true,
                         style: TextStyle(
-                          fontSize: 29,
+                          fontSize: 16,
                           color: Colors.white,
                         ),
                         controller: passwordController,
@@ -185,7 +185,7 @@ class SignUpState extends State<Signup> {
                                 const EdgeInsets.symmetric(horizontal: 20.0),
                             child: Icon(
                               FontAwesomeIcons.lock,
-                              size: 28,
+                              size: 18,
                               color: kWhite,
                             ),
                           ),
@@ -198,7 +198,7 @@ class SignUpState extends State<Signup> {
                           errorStyle: TextStyle(
                             color: Colors.yellow,
                             fontWeight: FontWeight.bold,
-                            fontSize: 18,
+                            fontSize: 16,
                           ),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.white)),
@@ -236,7 +236,7 @@ class SignUpState extends State<Signup> {
                       child: TextFormField(
                         obscureText: true,
                         style: TextStyle(
-                          fontSize: 29,
+                          fontSize: 16,
                           color: Colors.white,
                         ),
                         controller: confirmPassword,
@@ -247,7 +247,7 @@ class SignUpState extends State<Signup> {
                                 const EdgeInsets.symmetric(horizontal: 20.0),
                             child: Icon(
                               FontAwesomeIcons.lock,
-                              size: 28,
+                              size: 18,
                               color: kWhite,
                             ),
                           ),
@@ -292,7 +292,7 @@ class SignUpState extends State<Signup> {
                       padding: EdgeInsets.fromLTRB(15, 10, 15, 0),
                       child: TextFormField(
                         style: TextStyle(
-                          fontSize: 29,
+                          fontSize: 16,
                           color: Colors.white,
                         ),
                         controller: addressController,
@@ -303,7 +303,7 @@ class SignUpState extends State<Signup> {
                                 const EdgeInsets.symmetric(horizontal: 20.0),
                             child: Icon(
                               FontAwesomeIcons.home,
-                              size: 28,
+                              size: 18,
                               color: kWhite,
                             ),
                           ),
@@ -316,7 +316,7 @@ class SignUpState extends State<Signup> {
                           errorStyle: TextStyle(
                             color: Colors.yellow,
                             fontWeight: FontWeight.bold,
-                            fontSize: 18,
+                            fontSize: 16,
                           ),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.white)),
@@ -417,7 +417,7 @@ class SignUpState extends State<Signup> {
                           'have account?',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 27,
+                            fontSize: 10,
                           ),
                         ),
                         FlatButton(
@@ -425,7 +425,7 @@ class SignUpState extends State<Signup> {
                           child: Text(
                             'Log In',
                             style: TextStyle(
-                                fontSize: 29, fontWeight: FontWeight.bold),
+                                fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                           onPressed: () {
                             Navigator.pop(context);

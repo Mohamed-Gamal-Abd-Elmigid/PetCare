@@ -82,7 +82,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       padding: const EdgeInsets.only(top: 10),
                       child: Text('Dr.${widget.doctor.name}' ?? " ",
                           style: TextStyle(
-                              fontSize: 28, fontWeight: FontWeight.bold)),
+                              fontSize: 18, fontWeight: FontWeight.bold)),
                     ),
                     Container(
                       alignment: Alignment.center,
@@ -91,7 +91,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         '${widget.doctor.phone ?? "Empty"}',
                         //"As clinic director, I hold responsibility for maintaining and environment that promotes collaborative and supportive practices",
                         style: TextStyle(
-                          fontSize: 22,
+                          fontSize: 16,
                           color: Color.fromARGB(255, 43, 54, 62),
                         ),
                         textAlign: TextAlign.left,
@@ -214,7 +214,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           Text(
                             widget.doctor.address,
                             style: TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.bold),
+                                fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                           SizedBox(
                             width: 120.0,
@@ -227,7 +227,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
-                                fontSize: 22,
+                                fontSize: 16,
                               ),
                             ),
                           ),
@@ -245,7 +245,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       child: Text(
                         "Choose when to book",
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                            fontSize: 16, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.right,
                       ),
                     ),

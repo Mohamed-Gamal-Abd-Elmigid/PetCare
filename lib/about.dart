@@ -44,7 +44,7 @@ class About extends StatelessWidget {
                   'I wanna be your vacuum cleaner Breathing  your dust I wanna be your Ford Cortina I will never rust',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 20,
+                    fontSize: 16,
                   ),
                 ),
               ),
@@ -54,7 +54,7 @@ class About extends StatelessWidget {
                   'If you like your coffee hot Let me be your coffee pot You call the shots, babe I just wanna be yours Secrets I have held in my heart Are harder to hide than I thought Maybe I just wanna be yours I wanna be yours',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 20,
+                    fontSize: 16,
                   ),
                 ),
               ),
@@ -64,7 +64,7 @@ class About extends StatelessWidget {
                   'I wanna be your vacuum cleaner Breathing  your dust I wanna be your Ford Cortina I will never rust',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 20,
+                    fontSize: 16,
                   ),
                 ),
               ),
@@ -74,7 +74,7 @@ class About extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 29,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

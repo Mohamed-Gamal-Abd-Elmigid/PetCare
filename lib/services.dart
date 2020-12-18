@@ -73,7 +73,7 @@ class _ServicesState extends State<Services> {
               child: Text(
                 "Choose the required services",
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.right,
@@ -112,7 +112,7 @@ class _ServicesState extends State<Services> {
                                   child: Text(
                                     widget.services[index].title,
                                     style: TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -163,7 +163,7 @@ class _ServicesState extends State<Services> {
                     'Reserve',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 25,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

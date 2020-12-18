@@ -124,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
-                        fontSize: 29,
+                        fontSize: 20,
                       ),
                     ),
                     subtitle: isSignIn
@@ -276,7 +276,7 @@ class _HomePageState extends State<HomePage> {
                         Text(
                           isSignIn ? 'Log Out' : " Login",
                           style: TextStyle(
-                              fontSize: 27, fontWeight: FontWeight.bold),
+                              fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                         SizedBox(
                           width: 40,
@@ -304,7 +304,7 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(20),
               child: TextField(
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 16,
                   ),
                   controller: search,
                   decoration: InputDecoration(
@@ -356,7 +356,7 @@ class _HomePageState extends State<HomePage> {
                           child: Text(
                             "How to use our App ?",
                             // widget.text,
-                            style: TextStyle(fontSize: 23),
+                            style: TextStyle(fontSize: 18),
                           ),
                         ),
                         Column(
@@ -402,7 +402,7 @@ class _HomePageState extends State<HomePage> {
                               vertical: 15, horizontal: 10),
                           child: Text(
                             "Services 🐾",
-                            style: TextStyle(fontSize: 23),
+                            style: TextStyle(fontSize: 18),
                           ),
                         ),
 
@@ -485,7 +485,7 @@ class _HomePageState extends State<HomePage> {
                     child: Text(
                       doctor.name,
                       style: TextStyle(
-                        fontSize: 25,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

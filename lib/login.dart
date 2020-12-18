@@ -98,7 +98,7 @@ class _State extends State<Login> {
                       padding: EdgeInsets.fromLTRB(15, 10, 15, 0),
                       child: TextFormField(
                         style: TextStyle(
-                          fontSize: 29,
+                          fontSize: 16,
                           color: Colors.white,
                         ),
                         controller: nameController,
@@ -122,7 +122,7 @@ class _State extends State<Login> {
                           errorStyle: TextStyle(
                             color: Colors.yellow,
                             fontWeight: FontWeight.bold,
-                            fontSize: 18,
+                            fontSize: 16,
                           ),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.white)),
@@ -158,7 +158,7 @@ class _State extends State<Login> {
                       child: TextFormField(
                         obscureText: true,
                         style: TextStyle(
-                          fontSize: 29,
+                          fontSize: 16,
                           color: Colors.white,
                         ),
                         controller: passwordController,
@@ -182,7 +182,7 @@ class _State extends State<Login> {
                           errorStyle: TextStyle(
                             color: Colors.yellow,
                             fontWeight: FontWeight.bold,
-                            fontSize: 18,
+                            fontSize: 16,
                           ),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.white)),
@@ -243,7 +243,7 @@ class _State extends State<Login> {
                           defaultWidget: Text(
                             'Login',
                             style: TextStyle(
-                              fontSize: 29,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -339,7 +339,7 @@ class _State extends State<Login> {
                           'Does not have account?',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 24,
+                            fontSize: 18,
                           ),
                         ),
                         FlatButton(
@@ -348,7 +348,7 @@ class _State extends State<Login> {
                           child: Text(
                             'Sign up',
                             style: TextStyle(
-                              fontSize: 29,
+                              fontSize: 22,
                               // backgroundColor: Colors.white70,
                               // Color.fromARGB(255, 218, 195, 186),
                               fontWeight: FontWeight.bold,

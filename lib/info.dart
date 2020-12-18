@@ -72,7 +72,7 @@ class _InfoState extends State<Info> {
                       'Status: ${getStatus()}',
                       style: TextStyle(
                         color: Color.fromARGB(255, 43, 54, 62),
-                        fontSize: 25,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -88,7 +88,7 @@ class _InfoState extends State<Info> {
                         'Cancel',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 25,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -136,7 +136,7 @@ class _InfoState extends State<Info> {
                                   child: Text(
                                     widget.information.doctor.name,
                                     style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -183,7 +183,7 @@ class _InfoState extends State<Info> {
                         //doctor.email,
                         "A veterinarian is a medical professional who protects the health and well-being of both animals and people. They diagnose and control animal diseases and treat sick and injured animals. ",
                         style: TextStyle(
-                          fontSize: 22,
+                          fontSize: 16,
                           color: Colors.black,
                         ),
                         textAlign: TextAlign.justify,
@@ -207,7 +207,7 @@ class _InfoState extends State<Info> {
                       child: Text(
                         "Contact",
                         style: TextStyle(
-                            fontSize: 26, fontWeight: FontWeight.bold),
+                            fontSize: 18, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.right,
                       ),
                     ),
@@ -231,7 +231,7 @@ class _InfoState extends State<Info> {
                             // widget.information[0].user.address,
                             '${widget.information.doctor.phone ?? "Empty"}',
                             style: TextStyle(
-                              fontSize: 22,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -260,7 +260,7 @@ class _InfoState extends State<Info> {
                           Text(
                             widget.information.doctor.address,
                             style: TextStyle(
-                              fontSize: 22,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                             ),
@@ -275,7 +275,7 @@ class _InfoState extends State<Info> {
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
-                                  fontSize: 22,
+                                  fontSize: 16,
                                 ),
                               ),
                             ),
@@ -303,7 +303,7 @@ class _InfoState extends State<Info> {
                             // 'Dr.${widget.doctor.name}' ?? " ",
                             widget.information.doctor.email,
                             style: TextStyle(
-                              fontSize: 22,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -332,7 +332,7 @@ class _InfoState extends State<Info> {
                       child: Text(
                         "Add Rate",
                         style: TextStyle(
-                            fontSize: 26, fontWeight: FontWeight.bold),
+                            fontSize: 18, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.right,
                       ),
                     ),
@@ -389,7 +389,7 @@ class _InfoState extends State<Info> {
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
-                                  fontSize: 22,
+                                  fontSize: 16,
                                 ),
                               ),
                             ),
@@ -416,7 +416,7 @@ class _InfoState extends State<Info> {
                       child: Text(
                         "Reservation Services",
                         style: TextStyle(
-                            fontSize: 26, fontWeight: FontWeight.bold),
+                            fontSize: 18, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.right,
                       ),
                     ),
@@ -447,7 +447,7 @@ class _InfoState extends State<Info> {
                                 Text(
                                   widget.information.services[index].title,
                                   style: TextStyle(
-                                    fontSize: 22,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),

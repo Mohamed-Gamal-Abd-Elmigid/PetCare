@@ -79,7 +79,7 @@ class _ProfileState extends State<Profile> {
                       // Padding : const EdgeInsets.only(left: 20 ),
                       'Edit Profile',
                       style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(
                       height: 20,
@@ -152,7 +152,7 @@ class _ProfileState extends State<Profile> {
                           child: Text(
                             'Cancel',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 18,
                               letterSpacing: 2.2,
                               color: Colors.black,
                             ),
@@ -179,7 +179,7 @@ class _ProfileState extends State<Profile> {
                               'Save',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20,
+                                fontSize: 18,
                                 letterSpacing: 2.2,
                                 color: Colors.white,
                               ),
@@ -202,7 +202,7 @@ class _ProfileState extends State<Profile> {
       child: TextField(
         controller: textController,
         style: TextStyle(
-          fontSize: 20,
+          fontSize: 16,
           fontWeight: FontWeight.bold,
           color: Colors.black,
         ),
@@ -212,7 +212,7 @@ class _ProfileState extends State<Profile> {
           floatingLabelBehavior: FloatingLabelBehavior.always,
           hintText: placeholder,
           hintStyle: TextStyle(
-            fontSize: 20,
+            fontSize: 16,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),

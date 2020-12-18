@@ -26,7 +26,7 @@ class Contact extends StatelessWidget {
             child: Text(
               'Happy To Recive Your Comment',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.grey,
               ),
@@ -39,7 +39,7 @@ class Contact extends StatelessWidget {
               child: TextField(
                 cursorColor: Colors.white,
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 16,
                 ),
                 decoration: InputDecoration(
                   prefixIcon: Padding(
@@ -67,7 +67,7 @@ class Contact extends StatelessWidget {
             child: Text(
               'Your Message',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.grey,
               ),
@@ -80,7 +80,7 @@ class Contact extends StatelessWidget {
               child: TextField(
                 cursorColor: Colors.white,
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 16,
                 ),
                 decoration: InputDecoration(
                   hintText: "Insert your message",
@@ -99,7 +99,7 @@ class Contact extends StatelessWidget {
               child: Text(
                 'For More Detial : 15428',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: Colors.grey,
                 ),
@@ -119,7 +119,7 @@ class Contact extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    fontSize: 18,
                   ),
                 ),
                 color: Color.fromARGB(255, 43, 54, 62),
