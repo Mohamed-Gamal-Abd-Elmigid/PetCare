@@ -280,7 +280,9 @@ class _State extends State<Login> {
                           onPressed: () async {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                  builder: (context) => HomePage()),
+                                  builder: (context) => HomePage(
+                                        isSignIn: false,
+                                      )),
                               // value: value
                             );
                           },

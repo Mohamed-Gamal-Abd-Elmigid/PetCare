@@ -148,9 +148,11 @@ class _ProfileState extends State<Profile> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            getData();
+                          },
                           child: Text(
-                            'Cancel',
+                            'Reset',
                             style: TextStyle(
                               fontSize: 18,
                               letterSpacing: 2.2,
